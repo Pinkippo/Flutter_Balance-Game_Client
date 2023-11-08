@@ -14,7 +14,7 @@ const baseUrl = 'http://13.209.40.73:8080';
 class MyApiClient {
 
   /// 회원가입
-  Future<String> register(RegisterRequestModel requestModel) async {
+  Future<bool> register(RegisterRequestModel requestModel) async {
     final url = Uri.parse('$baseUrl/user/join');
     final response = await http.post(
       url,
@@ -24,8 +24,19 @@ class MyApiClient {
       body: jsonEncode(requestModel.toJson()),
     );
 
+    print(response.body);
+
     if (response.statusCode == 200) {
-      return response.body;
+      return true;
+    } else if (response.statusCode != 200) {
+      Get.snackbar(
+        '회원가입 실패',
+        response.body,
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.redAccent,
+        colorText: Colors.white,
+      );
+      return false;
     } else {
       Get.snackbar(
         '회원가입 실패',
@@ -34,7 +45,7 @@ class MyApiClient {
         backgroundColor: Colors.redAccent,
         colorText: Colors.white,
       );
-      throw Exception('Failed to register');
+      return false;
     }
   }
 
@@ -50,11 +61,20 @@ class MyApiClient {
       body: jsonEncode(loginRequestModel.toJson()),
     );
 
+    print(response.body);
+
     if (response.statusCode == 200) {
       return LoginResponseModel.fromJson(jsonDecode(response.body));
-    } else if (response.statusCode == 500){
-      return LoginResponseModel.fromJson(jsonDecode(response.body));
-    }else{
+    } else if (response.statusCode != 200) {
+      Get.snackbar(
+        '로그인 실패',
+        response.body,
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.redAccent,
+        colorText: Colors.white,
+      );
+      throw Exception('Failed to login');
+    } else {
       Get.snackbar(
         '회원가입 실패',
         '서버 상태가 불안정합니다. 잠시 후 다시 시도해주세요.',

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_balance_game_client/common/app_colors.dart';
 import 'package:flutter_balance_game_client/controller/login_controller.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
 
 /// 로그인 입력 폼 위젯 - LoginController 연결
@@ -25,17 +26,18 @@ class LoginForm extends GetView<LoginController> {
                 TextButton(
                   onPressed: () async {
                     /// ID, PW 입력창 초기화
-                    controller.updateId('');
-                    controller.updatePassword('');
+                    controller.updateLoginUserId('');
+                    controller.updateLoginUserPw('');
 
                     /// 회원가입 페이지 이동
                     await Get.toNamed('/register');
                   },
                   child: const Text(
-                    '회원가입 하러 가자!!',
+                    '회원가입 하러 가기!!',
                     style: TextStyle(
                       fontSize: 14,
                       color: AppColors.mainRedColor,
+                      fontWeight: FontWeight.bold,
                     ),
                   ),
                 ),
@@ -69,7 +71,7 @@ class LoginForm extends GetView<LoginController> {
                   Icon(Icons.person, color: AppColors.mainRedColor),
                 ),
                 onChanged: (text) {
-                  controller.updateId(text);
+                  controller.updateLoginUserId(text);
                 },
               ),
             ),
@@ -106,7 +108,7 @@ class LoginForm extends GetView<LoginController> {
                   fontSize: 15,
                 ),
                 onChanged: (text) {
-                  controller.updatePassword(text);
+                  controller.updateLoginUserPw(text);
                 },
               ),
             ),
@@ -125,8 +127,23 @@ class LoginForm extends GetView<LoginController> {
                 padding: const EdgeInsets.symmetric(
                     vertical: 12.0), //버튼 위아래 패딩 크기 늘리기
               ),
-              onPressed: () async {
-                await controller.login();
+              onPressed: () {
+                /// 인디케이터 실행 -> 로그인 수행
+                Get.showOverlay(
+                  asyncFunction: controller.login,
+                  loadingWidget: Container(
+                    color: Colors.black12,
+                    alignment: Alignment.center,
+                    child: const SpinKitThreeBounce(
+                      color: AppColors.mainRedColor,
+                    ),
+                  ),
+                ).then((value){
+                  /// 로그인 성공 - 메인 페이지 이동
+                  if(value == true){
+                    Get.offAllNamed('/main');
+                  }
+                });
               },
               child: const Center(
                 child: Text(

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_balance_game_client/common/app_colors.dart';
 import 'package:flutter_balance_game_client/controller/login_controller.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
 
 /// 회원가입 입력 폼 위젯
@@ -133,7 +134,7 @@ class RegisterForm extends GetView<LoginController> {
                 ),
                 obscureText: true,
                 onChanged: (text) {
-                  controller.updatePassword(text);
+                  controller.updatePw(text);
                 },
               ),
             ),
@@ -166,7 +167,7 @@ class RegisterForm extends GetView<LoginController> {
                 ),
                 obscureText: true,
                 onChanged: (text) {
-                  controller.updatePasswordCheck(text);
+                  controller.updatePwCheck(text);
                 },
               ),
             ),
@@ -208,7 +209,30 @@ class RegisterForm extends GetView<LoginController> {
                     vertical: 12.0), //버튼 위아래 패딩 크기 늘리기
               ),
               onPressed: () async {
-                /// TODO : 회원 가입 버튼 로직 작성
+                /// 인디케이터 실행 -> 회원가입 수행
+                Get.showOverlay(
+                  asyncFunction: controller.register,
+                  loadingWidget: Container(
+                    color: Colors.black12,
+                    alignment: Alignment.center,
+                    child: const SpinKitThreeBounce(
+                      color: AppColors.mainRedColor,
+                    ),
+                  ),
+                ).then((value){
+                  if(value == true){
+                    /// 회원가입 성공 시, 입력 정보 초기화 후, 로그인 페이지 이동
+                    controller.clearUserInput();
+                    Get.back();
+                    Get.snackbar(
+                      '회원가입 완료!',
+                      '양자택일 회원가입에 성공했습니다.',
+                      snackPosition: SnackPosition.BOTTOM,
+                      backgroundColor: AppColors.mainOrangeColor,
+                      colorText: Colors.white,
+                    );
+                  }
+                });
               },
               child: const Center(
                 child: Text(

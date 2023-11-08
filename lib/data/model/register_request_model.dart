@@ -2,7 +2,7 @@
 /// 회원가입 요청 모델
 class RegisterRequestModel {
   String userId;
-  String userPassword;
+  String userPw;
   String userName;
   String userEmail;
 
@@ -10,7 +10,7 @@ class RegisterRequestModel {
   /// 회원가입 요청 모델 생성자
   RegisterRequestModel({
     required this.userId,
-    required this.userPassword,
+    required this.userPw,
     required this.userName,
     required this.userEmail
   });
@@ -19,7 +19,7 @@ class RegisterRequestModel {
   Map<String, dynamic> toJson() {
     return {
       'userId': userId,
-      'userPassword': userPassword,
+      'userPw': userPw,
       'userName': userName,
       'userEmail': userEmail
     };

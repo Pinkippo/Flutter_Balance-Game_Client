@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_balance_game_client/app.dart';
 import 'package:flutter_balance_game_client/binding/login_binding.dart';
 import 'package:flutter_balance_game_client/screen/login_page.dart';
+import 'package:flutter_balance_game_client/screen/main_page.dart';
 import 'package:flutter_balance_game_client/screen/register_page.dart';
 import 'package:get/get.dart';
 
@@ -19,6 +20,9 @@ class AppPages {
     ),
     GetPage(
       name: Routes.register, page: () => const RegisterPage(), transition: Transition.fade
+    ),
+    GetPage(
+      name: Routes.main, page: () => const MainPage(), transition: Transition.fade
     )
   ];
 }
