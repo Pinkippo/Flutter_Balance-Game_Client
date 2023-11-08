@@ -8,7 +8,7 @@ class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const Scaffold(
-      // 로그인 페이지 이동
+      /// TODO : 로그인 여부에 따른 페이지 분기 및 로딩 처리
       body: LoginPage(),
     );
   }

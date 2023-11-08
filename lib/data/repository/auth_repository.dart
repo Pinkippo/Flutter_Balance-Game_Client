@@ -1,11 +1,16 @@
+import 'package:flutter_balance_game_client/data/model/login_request_model.dart';
+import 'package:flutter_balance_game_client/data/model/register_request_model.dart';
 import 'package:flutter_balance_game_client/data/provider/api.dart';
-import 'package:meta/meta.dart';
 
 /// 회원 데이터 처리 클래스
 class AuthRepository{
 
-  final MyApiClient apiClient;
-
-  AuthRepository({required this.apiClient});
-
+  login(LoginRequestModel loginRequestModel) {
+    return MyApiClient().login(loginRequestModel);
+  }
+  
+  register(RegisterRequestModel registerRequestModel) {
+    return MyApiClient().register(registerRequestModel);
+  }
+  
 }
