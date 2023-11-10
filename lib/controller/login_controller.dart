@@ -48,11 +48,14 @@ class LoginController extends GetxController{
     print('jwtToken: = ${jwtToken.value}');
   }
 
-  /// 로그인 테스트 - 토큰 설정하기
-  Future<void> setToken() async {
-    print("토큰 세팅 --------");
-    await storage.write(key: 'jwtToken', value: 'sdfsdfsdfsdf');
-  }
+  /// 로그인 테스트 - 로그인 상태 확인
+  bool get isLogin => jwtToken.value != '';
+
+  // /// 로그인 테스트 - 토큰 설정하기
+  // Future<void> setToken() async {
+  //   print("토큰 세팅 --------");
+  //   await storage.write(key: 'jwtToken', value: 'sdfsdfsdfsdf');
+  // }
 
   /// 사용자 입력 정보 업데이트
 
