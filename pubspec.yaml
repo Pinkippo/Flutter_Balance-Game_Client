@@ -52,6 +52,7 @@ dependencies:
   # ui
   flutter_spinkit: ^5.2.0
   flutter_animated_dialog: ^2.0.1
+  flutter_native_splash: ^2.3.3
 
 
   # The following adds the Cupertino Icons font to your application.

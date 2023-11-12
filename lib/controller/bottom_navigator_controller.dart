@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 /// 바텀 네비게이션 바 관련 Getx Controller
