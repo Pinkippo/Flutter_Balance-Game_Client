@@ -130,6 +130,12 @@ class LoginController extends GetxController{
 
   }
 
+  /// 로그아웃 - 메서드
+  Future<void> logout() async {
+    await storage.delete(key: 'jwtToken');
+    jwtToken.value = '';
+  }
+
   /// 회원가입 - 메서드
   Future<bool> register() async {
     if (userEmail.value == '' ||

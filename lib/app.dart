@@ -9,7 +9,7 @@ import 'package:get/get.dart';
 class App extends GetView<LoginController> {
   const App({super.key});
 
-  /// TODO : Splash 화면 설정, FCM 설정, 알림 설정에 의한 앱 실행 로직 처리
+  /// TODO : FCM 설정, 알림 설정에 의한 앱 실행 로직 처리
 
 
 

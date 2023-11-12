@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_balance_game_client/common/pref/app_preferences.dart';
 import 'package:flutter_balance_game_client/controller/login_controller.dart';
 import 'package:flutter_balance_game_client/data/repository/auth_repository.dart';
 import 'package:flutter_balance_game_client/route/app_pages.dart';
@@ -12,6 +13,9 @@ void main() async {
 
   /// 스플래시 생성
   FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
+
+  /// 앱 설정 파일 로드
+  await AppPreferences.init();
 
   await initService();
 

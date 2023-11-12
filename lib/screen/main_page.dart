@@ -24,6 +24,7 @@ class MainPage extends StatelessWidget {
     Get.put(CustomBottomNavgationBarController());
 
     return Scaffold(
+      backgroundColor: AppColors.backgroundColor,
       /// 앱바
       appBar: AppBar(
         backgroundColor: AppColors.backgroundColor,
