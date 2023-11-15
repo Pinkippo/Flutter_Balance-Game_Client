@@ -7,6 +7,8 @@ import 'package:flutter_balance_game_client/data/model/register_request_model.da
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 
+import '../model/board_response_model.dart';
+
 /// 양자 택일 AWS 서버
 const baseUrl = 'http://13.209.40.73:8080';
 
@@ -83,6 +85,56 @@ class MyApiClient {
         colorText: Colors.white,
       );
       throw Exception('Failed to login');
+    }
+  }
+
+  /// 메인 리스트 조회
+  Future<List<BoardResponseModel>> getMainList(int pageNumber, int pageSize, String token) async {
+    final url = Uri.parse('$baseUrl/board/findAllByDate?page=$pageNumber&size=$pageSize');
+
+    final response = await http.get(
+      url,
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'Authorization': 'Bearer $token',
+      },
+    );
+
+    print(response.statusCode);
+    print(response.body);
+
+    if (response.statusCode == 200) {
+      final List<BoardResponseModel> boardList = [];
+      final Map<String, dynamic> jsonResponse = jsonDecode(response.body);
+
+      if (jsonResponse.containsKey('findAllByDateDtos')) {
+        final List<dynamic> jsonList = jsonResponse['findAllByDateDtos'];
+
+        for (final item in jsonList) {
+          boardList.add(BoardResponseModel.fromJson(item));
+        }
+
+        return boardList;
+      } else {
+        Get.snackbar(
+          '메인 리스트 조회 실패',
+          '서버 상태가 불안정합니다. 잠시 후 다시 시도해주세요.',
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.redAccent,
+          colorText: Colors.white,
+        );
+        throw Exception('Failed to get main list');
+      }
+    } else {
+      Get.snackbar(
+        '메인 리스트 조회 실패',
+        '서버 상태가 불안정합니다. 잠시 후 다시 시도해주세요.',
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.redAccent,
+        colorText: Colors.white,
+      );
+      throw Exception('Failed to get main list');
     }
   }
 }
