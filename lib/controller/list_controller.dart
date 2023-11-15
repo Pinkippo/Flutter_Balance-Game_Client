@@ -9,7 +9,7 @@ class ListController extends GetxController{
 
   @override
   void onInit() async {
-    // await addMockBoard();
+    await addMockBoard();
     super.onInit();
   }
 
@@ -18,7 +18,7 @@ class ListController extends GetxController{
     for (int i = 0; i < 20; i++) {
       boardList.add(BoardResponseModel(
         boardDate: '2021-09-01',
-        boardTitle: '제목 $i',
+        boardTitle: '제목sfasdfasfasdfasfasdfasfdasdfaadfadfasdfasdfadfadfasfdasfdasfasdfasdfasfasdf $i',
         boardKey: i,
         leftContent: '왼쪽 $i',
         rightContent: '오른쪽 $i',

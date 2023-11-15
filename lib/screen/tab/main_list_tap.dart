@@ -20,7 +20,7 @@ class MainListTap extends GetView<ListController> {
         /// TODO: 서버에서 데이터를 0페이지부터 가져와서 초기화
       },
       child: Obx(
-            () {
+        () {
           if (controller.boardList.isEmpty) {
             /// 게시물이 없는 경우
             return ListView(
@@ -37,109 +37,146 @@ class MainListTap extends GetView<ListController> {
               itemCount: controller.boardList.length,
               itemBuilder: (context, index) {
                 return Card(
-                  child: Container(
-                    color: AppColors.backgroundColor,
-                    width: Get.width * 0.9,
-                    height: 180,
-                    /// 상단부
-                    child: Column(
-                      children: [
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        SizedBox(
-                          width: Get.width,
-                          height: 50,
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              const SizedBox(
-                                width: 10,
-                              ),
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Text(
-                                    controller.boardList[index].userName,
-                                    style: const TextStyle(
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.bold,
-                                    ),
+                  elevation: 10,
+                  color: AppColors.cardColor,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  shadowColor: Colors.grey.withOpacity(0.5),
+                  child: Column(
+                    children: [
+                      const SizedBox(
+                        height: 15,
+                      ),
+                      SizedBox(
+                        width: Get.width,
+                        height: 50,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            const SizedBox(
+                              width: 10,
+                            ),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  controller.boardList[index].userName,
+                                  style: const TextStyle(
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.bold,
                                   ),
-                                  Text(
-                                    controller.boardList[index].boardDate,
-                                    style: const TextStyle(
-                                      fontSize: 12,
-                                    ),
+                                ),
+                                Text(
+                                  controller.boardList[index].boardDate,
+                                  style: const TextStyle(
+                                    fontSize: 12,
                                   ),
-                                ],
-                              ),
-                              const Spacer(),
-                              const Icon(
-                                Icons.thumb_up_alt_outlined,
-                                size: 30,
-                                color: AppColors.mainPurpleColor,
-                              ),
-                              const SizedBox(
-                                width: 10,
-                              ),
-                            ],
-                          ),
+                                ),
+                              ],
+                            ),
+                            const Spacer(),
+                            const Icon(
+                              Icons.thumb_up_alt_outlined,
+                              size: 30,
+                              color: AppColors.mainPurpleColor,
+                            ),
+                            const SizedBox(
+                              width: 15,
+                            ),
+                          ],
                         ),
-                        /// 중단부
-                        SizedBox(
-                          height: 30,
-                          child: Center(
-                            child: Text(
-                              controller.boardList[index].boardTitle,
-                              style: const TextStyle(
-                                fontSize: 24,
-                                fontWeight: FontWeight.bold,
-                              ),
+                      ),
+
+                      const SizedBox(
+                        height: 10,
+                      ),
+
+                      /// 중단부
+                      SizedBox(
+                        width: Get.width * 0.86,
+                        child: Center(
+                          child: Text(
+                            controller.boardList[index].boardTitle,
+                            style: const TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
                             ),
                           ),
                         ),
-                        /// 하단부
-                        Container(
+                      ),
+
+                      const SizedBox(
+                        height: 10,
+                      ),
+
+                      /// 하단부
+                      SizedBox(
                           height: 90,
-                          color: Colors.red,
                           child: Row(
                             children: [
                               Expanded(
-                                child: Container(
-                                  color: Colors.blue,
-                                  child: Center(
-                                    child: Text(
-                                      controller.boardList[index].leftContent,
-                                      style: const TextStyle(
-                                        fontSize: 22,
-                                        fontWeight: FontWeight.bold,
+                                flex: 3,
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Card(
+                                    color: AppColors.mainRedColor,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(20),
+                                    ),
+                                    child: Center(
+                                      child: Text(
+                                        controller.boardList[index].leftContent,
+                                        style: const TextStyle(
+                                          fontSize: 22,
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.white,
+                                        ),
                                       ),
                                     ),
                                   ),
                                 ),
                               ),
+                              const Expanded(
+                                flex: 1,
+                                child: Center(
+                                  child: Text(
+                                    "VS",
+                                    style: TextStyle(
+                                      fontSize: 22,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ),
+                              ),
                               Expanded(
-                                child: Container(
-                                  color: Colors.green,
-                                  child: Center(
-                                    child: Text(
-                                      controller.boardList[index].rightContent,
-                                      style: const TextStyle(
-                                        fontSize: 22,
-                                        fontWeight: FontWeight.bold,
+                                flex: 3,
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Card(
+                                    color: AppColors.mainRedColor,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(20),
+                                    ),
+                                    child: Center(
+                                      child: Text(
+                                        controller
+                                            .boardList[index].rightContent,
+                                        style: const TextStyle(
+                                          fontSize: 22,
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.white,
+                                        ),
                                       ),
                                     ),
                                   ),
                                 ),
                               ),
                             ],
-                          )
-                        ),
-                      ],
-                    ),
+                          )),
+                    ],
                   ),
                 );
               },
