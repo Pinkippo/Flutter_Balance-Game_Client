@@ -108,8 +108,8 @@ class MyApiClient {
       final List<BoardResponseModel> boardList = [];
       final Map<String, dynamic> jsonResponse = jsonDecode(response.body);
 
-      if (jsonResponse.containsKey('findAllByDateDtos')) {
-        final List<dynamic> jsonList = jsonResponse['findAllByDateDtos'];
+      if (jsonResponse.containsKey('findAllBoardDtos')) {
+        final List<dynamic> jsonList = jsonResponse['findAllBoardDtos'];
 
         for (final item in jsonList) {
           boardList.add(BoardResponseModel.fromJson(item));

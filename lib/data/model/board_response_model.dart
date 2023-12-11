@@ -6,6 +6,7 @@ class BoardResponseModel {
   final String boardTitle;
   final String leftContent;
   final String rightContent;
+  final int heartCount;
 
   BoardResponseModel({
     required this.boardKey,
@@ -14,6 +15,7 @@ class BoardResponseModel {
     required this.boardTitle,
     required this.leftContent,
     required this.rightContent,
+    required this.heartCount,
   });
 
   factory BoardResponseModel.fromJson(Map<String, dynamic> json) {
@@ -24,6 +26,7 @@ class BoardResponseModel {
       boardTitle: json['boardTitle'] as String,
       leftContent: json['leftContent'] as String,
       rightContent: json['rightContent'] as String,
+      heartCount: json['heartCount'] as int,
     );
   }
 }

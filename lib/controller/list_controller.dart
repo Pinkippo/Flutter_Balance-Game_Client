@@ -36,6 +36,7 @@ class ListController extends GetxController{
         leftContent: '왼쪽 $i',
         rightContent: '오른쪽 $i',
         userName: '유저 $i',
+        heartCount: i,
       ));
     }
   }
@@ -43,11 +44,11 @@ class ListController extends GetxController{
   /// 게시글 리스트 추가 -
   Future<void> addBoardList() async {
     String? token = await storage.read(key: 'jwtToken');
-    print('토큰' + token!);
+    print('토큰${token!}');
     print(pageNumber.value);
     print(pageSize.value);
 
-    List<BoardResponseModel> tempList = await BoardRepository().getMainList(token! ,pageNumber.value, pageSize.value);
+    List<BoardResponseModel> tempList = await BoardRepository().getMainList(token ,pageNumber.value, pageSize.value);
     boardList.addAll(tempList);
   }
 
