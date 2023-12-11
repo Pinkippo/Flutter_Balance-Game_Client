@@ -32,8 +32,13 @@ void main() async {
 
 /// 앱 내에서 사용할 로그인 컨트롤러 등록
 Future<void> initService() async {
+
   /// 로그인 컨트롤러 영속성 설정
-  Get.put(LoginController(authRepository: AuthRepository()) , permanent: true);
-  /// 로그인 컨트롤러 처리를 위한 딜레이
-  await Future.delayed(const Duration(seconds: 1));
+  await Get.putAsync<LoginController>(() async {
+    return LoginController(authRepository: AuthRepository());
+    }, permanent: true).then((value) async {
+     await value.getToken();
+     print("로그인 여부 : $value.isLogin");
+  });
+  
 }
