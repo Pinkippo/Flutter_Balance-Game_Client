@@ -16,40 +16,56 @@ class ListController extends GetxController{
   /// 페이지 사이즈
   RxInt pageSize = 20.obs;
 
+  /// 페이지 마지막 여부
+  RxBool isLast = false.obs;
+
+  /// 게시물 리스트
   RxList<BoardResponseModel> boardList = <BoardResponseModel>[].obs;
 
   @override
   void onInit() async {
-    //await addMockBoard();
     addBoardList();
-
     super.onInit();
   }
 
-  /// Test 데이터 추가
-  Future<void> addMockBoard() async {
-    for (int i = 0; i < 20; i++) {
-      boardList.add(BoardResponseModel(
-        boardDate: '2021-09-01',
-        boardTitle: '제목sfasdfasfasdfasfasdfasfdasdfaadfadfasdfasdfadfadfasfdasfdasfasdfasdfasfasdf $i',
-        boardKey: i,
-        leftContent: '왼쪽 $i',
-        rightContent: '오른쪽 $i',
-        userName: '유저 $i',
-        heartCount: i,
-      ));
-    }
+  /// 페이지 번호 수정
+  void changePageNumber(int number) {
+    pageNumber.value = number;
   }
 
   /// 게시글 리스트 추가 -
   Future<void> addBoardList() async {
+
+    // 마지막 페이지 여부 확인
+    if(isLast.value) {
+      return;
+    }
+
     String? token = await storage.read(key: 'jwtToken');
     print('토큰${token!}');
     print(pageNumber.value);
     print(pageSize.value);
 
+    // 게시물 추가
     List<BoardResponseModel> tempList = await BoardRepository().getMainList(token ,pageNumber.value, pageSize.value);
+    // 만약 게시물 개수가 20개 미만 - 마지막 페이지
+    if (tempList.length < pageSize.value) {
+      isLast.value = true;
+    }
+
     boardList.addAll(tempList);
+    // 페이지 번호 증가
+    changePageNumber(pageNumber.value + 1);
+  }
+
+  /// 게시물 리스트 새로고침
+  Future<void> refreshBoardList() async {
+    // 게시물 리스트 초기화
+    boardList.clear();
+    changePageNumber(0);
+    isLast.value = false;
+    // 페이지 추가
+    addBoardList();
   }
 
 

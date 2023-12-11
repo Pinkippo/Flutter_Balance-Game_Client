@@ -33,7 +33,7 @@ class NoMainItemWidget extends GetView<CustomBottomNavgationBarController> {
                 borderRadius: BorderRadius.circular(40),
               ),
               onPressed: () {
-                controller.changeIndex(0);
+                /// TODO : 게임 만들기 페이지 이동
               },
               child: const Icon(
                 Icons.add,
