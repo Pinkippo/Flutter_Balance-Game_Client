@@ -7,9 +7,23 @@ import '../model/board_response_model.dart';
 class BoardRepository{
 
   /// 메인 리스트 호출
-  Future<List<BoardResponseModel>> getMainList (String token, int pageNumber, int pageSize) async {
+  Future<List<BoardResponseModel>> getMainListByDate (String token, int pageNumber, int pageSize) async {
     return MyApiClient().getMainList(
       pageNumber, pageSize, token
+    );
+  }
+
+  /// 좋아요 순 리스트 호출
+  Future<List<BoardResponseModel>> getMainListByHeart (String token, int pageNumber, int pageSize) async {
+    return MyApiClient().getMainListByHeart(
+        pageNumber, pageSize, token
+    );
+  }
+
+  /// 내가 좋아요 누른 글 리스트 호출
+  Future<List<BoardResponseModel>> getMainListByHeartOn (String token, int pageNumber, int pageSize) async {
+    return MyApiClient().getMainListByHeartOn(
+        pageNumber, pageSize, token
     );
   }
 

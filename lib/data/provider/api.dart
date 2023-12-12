@@ -139,6 +139,107 @@ class MyApiClient {
       throw Exception('Failed to get main list');
     }
   }
+
+  /// 좋아요 순 메인 리스트 조회
+  Future<List<BoardResponseModel>> getMainListByHeart(int pageNumber, int pageSize, String token) async {
+    final url = Uri.parse('$baseUrl/board/findAllByHeart?page=$pageNumber&size=$pageSize');
+
+    final response = await http.get(
+      url,
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'Authorization': 'Bearer $token',
+      },
+    );
+
+    print(response.statusCode);
+    print(response.body);
+
+    if (response.statusCode == 200) {
+      final List<BoardResponseModel> boardList = [];
+      final Map<String, dynamic> jsonResponse = jsonDecode(response.body);
+
+      if (jsonResponse.containsKey('findAllBoardDtos')) {
+        final List<dynamic> jsonList = jsonResponse['findAllBoardDtos'];
+
+        for (final item in jsonList) {
+          boardList.add(BoardResponseModel.fromJson(item));
+        }
+
+        return boardList;
+      } else {
+        Get.snackbar(
+          '메인 리스트 조회 실패',
+          '서버 상태가 불안정합니다. 잠시 후 다시 시도해주세요.',
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.redAccent,
+          colorText: Colors.white,
+        );
+        throw Exception('Failed to get main list');
+      }
+    } else {
+      Get.snackbar(
+        '메인 리스트 조회 실패',
+        '서버 상태가 불안정합니다. 잠시 후 다시 시도해주세요.',
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.redAccent,
+        colorText: Colors.white,
+      );
+      throw Exception('Failed to get main list');
+    }
+  }
+
+  /// 내가 좋아요 누른 글 메인 리스트 조회
+  Future<List<BoardResponseModel>> getMainListByHeartOn(int pageNumber, int pageSize, String token) async {
+    final url = Uri.parse('$baseUrl/board/findAllByUserHeart?page=$pageNumber&size=$pageSize');
+
+    final response = await http.get(
+      url,
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'Authorization': 'Bearer $token',
+      },
+    );
+
+    print(response.statusCode);
+    print(response.body);
+
+    if (response.statusCode == 200) {
+      final List<BoardResponseModel> boardList = [];
+      final Map<String, dynamic> jsonResponse = jsonDecode(response.body);
+
+      if (jsonResponse.containsKey('findAllBoardDtos')) {
+        final List<dynamic> jsonList = jsonResponse['findAllBoardDtos'];
+
+        for (final item in jsonList) {
+          boardList.add(BoardResponseModel.fromJson(item));
+        }
+
+        return boardList;
+      } else {
+        Get.snackbar(
+          '메인 리스트 조회 실패',
+          '서버 상태가 불안정합니다. 잠시 후 다시 시도해주세요.',
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.redAccent,
+          colorText: Colors.white,
+        );
+        throw Exception('Failed to get main list');
+      }
+    } else {
+      Get.snackbar(
+        '메인 리스트 조회 실패',
+        '서버 상태가 불안정합니다. 잠시 후 다시 시도해주세요.',
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.redAccent,
+        colorText: Colors.white,
+      );
+      throw Exception('Failed to get main list');
+    }
+  }
+
 }
 
 
