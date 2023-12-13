@@ -15,6 +15,6 @@ class AppColors {
   static const Color backgroundColor = Color.fromRGBO(249, 246, 237, 1);
 
   /// 카드색
-  static const Color cardColor = Color.fromRGBO(252, 202, 136, 1.0);
+  static const Color cardColor = Color.fromRGBO(255, 250, 223, 1.0);
 
 }

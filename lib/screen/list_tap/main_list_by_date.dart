@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_balance_game_client/common/util.dart';
 import 'package:get/get.dart';
 
 import '../../common/app_colors.dart';
@@ -46,6 +47,7 @@ class ListByDate extends GetView<ListController> {
                 itemBuilder: (context, index) {
                   return Card(
                     elevation: 10,
+                    margin: const EdgeInsets.fromLTRB(0, 0, 0, 20),
                     color: AppColors.cardColor,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(20),
@@ -54,7 +56,7 @@ class ListByDate extends GetView<ListController> {
                     child: Column(
                       children: [
                         const SizedBox(
-                          height: 15,
+                          height: 5,
                         ),
                         SizedBox(
                           width: Get.width,
@@ -66,6 +68,12 @@ class ListByDate extends GetView<ListController> {
                               const SizedBox(
                                 width: 10,
                               ),
+                              const CircleAvatar(
+                                backgroundColor: AppColors.mainRedColor,
+                              ),
+                              const SizedBox(
+                                width: 10,
+                              ),
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 mainAxisAlignment: MainAxisAlignment.center,
@@ -73,14 +81,16 @@ class ListByDate extends GetView<ListController> {
                                   Text(
                                     controller.boardListByDate[index].userName,
                                     style: const TextStyle(
-                                      fontSize: 18,
+                                      fontSize: 16,
                                       fontWeight: FontWeight.bold,
+                                        color: AppColors.blackColor
                                     ),
                                   ),
                                   Text(
-                                    controller.boardListByDate[index].boardDate,
+                                    convertToFormattedString(controller.boardListByDate[index].boardDate),
                                     style: const TextStyle(
-                                      fontSize: 12,
+                                        fontSize: 10,
+                                        color: AppColors.blackColor
                                     ),
                                   ),
                                 ],
@@ -88,7 +98,7 @@ class ListByDate extends GetView<ListController> {
                               const Spacer(),
                               const Icon(
                                 Icons.thumb_up_alt_outlined,
-                                size: 30,
+                                size: 20,
                                 color: AppColors.mainPurpleColor,
                               ),
                               const SizedBox(
@@ -105,12 +115,14 @@ class ListByDate extends GetView<ListController> {
                         /// 중단부
                         SizedBox(
                           width: Get.width * 0.86,
+                          height: 50,
                           child: Center(
                             child: Text(
                               controller.boardListByDate[index].boardTitle,
                               style: const TextStyle(
                                 fontSize: 20,
                                 fontWeight: FontWeight.bold,
+                                color: AppColors.blackColor
                               ),
                             ),
                           ),
@@ -122,7 +134,7 @@ class ListByDate extends GetView<ListController> {
 
                         /// 하단부
                         SizedBox(
-                            height: 90,
+                            height: 70,
                             child: Row(
                               children: [
                                 Expanded(
@@ -130,20 +142,11 @@ class ListByDate extends GetView<ListController> {
                                   child: Padding(
                                     padding: const EdgeInsets.all(8.0),
                                     child: Card(
-                                      color: AppColors.mainRedColor,
+                                      color: AppColors.mainOrangeColor,
                                       shape: RoundedRectangleBorder(
                                         borderRadius: BorderRadius.circular(20),
                                       ),
-                                      child: Center(
-                                        child: Text(
-                                          controller.boardListByDate[index].leftContent,
-                                          style: const TextStyle(
-                                            fontSize: 22,
-                                            fontWeight: FontWeight.bold,
-                                            color: Colors.white,
-                                          ),
-                                        ),
-                                      ),
+                                      child: Container()
                                     ),
                                   ),
                                 ),
@@ -164,21 +167,11 @@ class ListByDate extends GetView<ListController> {
                                   child: Padding(
                                     padding: const EdgeInsets.all(8.0),
                                     child: Card(
-                                      color: AppColors.mainRedColor,
+                                      color: AppColors.mainOrangeColor,
                                       shape: RoundedRectangleBorder(
                                         borderRadius: BorderRadius.circular(20),
                                       ),
-                                      child: Center(
-                                        child: Text(
-                                          controller
-                                              .boardListByDate[index].rightContent,
-                                          style: const TextStyle(
-                                            fontSize: 22,
-                                            fontWeight: FontWeight.bold,
-                                            color: Colors.white,
-                                          ),
-                                        ),
-                                      ),
+                                      child: Container()
                                     ),
                                   ),
                                 ),
