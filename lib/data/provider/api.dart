@@ -68,7 +68,7 @@ class MyApiClient {
     print(response.body);
 
     if (response.statusCode == 200) {
-      return LoginResponseModel.fromJson(jsonDecode(response.body));
+      return LoginResponseModel.fromJson(jsonDecode(utf8.decode(response.bodyBytes)));
     } else if (response.statusCode != 200) {
       Get.snackbar(
         '로그인 실패',
@@ -108,7 +108,7 @@ class MyApiClient {
 
     if (response.statusCode == 200) {
       final List<BoardResponseModel> boardList = [];
-      final Map<String, dynamic> jsonResponse = jsonDecode(response.body);
+      final Map<String, dynamic> jsonResponse = jsonDecode(utf8.decode(response.bodyBytes));
 
       if (jsonResponse.containsKey('findAllBoardDtos')) {
         final List<dynamic> jsonList = jsonResponse['findAllBoardDtos'];
@@ -158,7 +158,7 @@ class MyApiClient {
 
     if (response.statusCode == 200) {
       final List<BoardResponseModel> boardList = [];
-      final Map<String, dynamic> jsonResponse = jsonDecode(response.body);
+      final Map<String, dynamic> jsonResponse = jsonDecode(utf8.decode(response.bodyBytes));
 
       if (jsonResponse.containsKey('findAllBoardDtos')) {
         final List<dynamic> jsonList = jsonResponse['findAllBoardDtos'];
@@ -208,7 +208,7 @@ class MyApiClient {
 
     if (response.statusCode == 200) {
       final List<BoardResponseModel> boardList = [];
-      final Map<String, dynamic> jsonResponse = jsonDecode(response.body);
+      final Map<String, dynamic> jsonResponse = jsonDecode(utf8.decode(response.bodyBytes));
 
       if (jsonResponse.containsKey('findAllBoardDtos')) {
         final List<dynamic> jsonList = jsonResponse['findAllBoardDtos'];
