@@ -23,7 +23,6 @@ class MainListTap extends GetView<ListByController> {
   Widget build(BuildContext context) {
 
     Get.put(ListByController(), permanent: true);
-
     Get.put(ListController(), permanent: true);
 
     return Column(

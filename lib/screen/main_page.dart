@@ -29,7 +29,10 @@ class MainPage extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: AppColors.backgroundColor,
         surfaceTintColor: AppColors.backgroundColor,
-        title: const Text('배너형 로고', style: TextStyle(color: AppColors.mainRedColor , fontSize: 30 , fontWeight: FontWeight.bold )),
+        title: Image.asset(
+          'assets/images/long_logo.png',
+          width: 120,
+        ),
         centerTitle: false,
         elevation: 0,
         actions: const [

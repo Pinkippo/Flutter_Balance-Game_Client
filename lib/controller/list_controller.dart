@@ -43,7 +43,10 @@ class ListController extends GetxController{
   @override
   void onInit() async {
     // 게시물 리스트에 초기 조회순 20개 추가
-    addBoardList(0);
+    await addBoardList(0);
+    await addBoardList(1);
+    await addBoardList(2);
+
     super.onInit();
   }
 

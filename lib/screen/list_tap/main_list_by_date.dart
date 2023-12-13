@@ -97,9 +97,9 @@ class ListByDate extends GetView<ListController> {
                               ),
                               const Spacer(),
                               const Icon(
-                                Icons.thumb_up_alt_outlined,
-                                size: 20,
-                                color: AppColors.mainPurpleColor,
+                                Icons.favorite,
+                                size: 30,
+                                color: AppColors.mainRedColor,
                               ),
                               const SizedBox(
                                 width: 15,

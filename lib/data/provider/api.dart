@@ -111,6 +111,11 @@ class MyApiClient {
       final Map<String, dynamic> jsonResponse = jsonDecode(utf8.decode(response.bodyBytes));
 
       if (jsonResponse.containsKey('findAllBoardDtos')) {
+
+        if (jsonResponse['findAllBoardDtos'] == null) {
+          return boardList;
+        }
+
         final List<dynamic> jsonList = jsonResponse['findAllBoardDtos'];
 
         for (final item in jsonList) {
@@ -161,6 +166,11 @@ class MyApiClient {
       final Map<String, dynamic> jsonResponse = jsonDecode(utf8.decode(response.bodyBytes));
 
       if (jsonResponse.containsKey('findAllBoardDtos')) {
+
+        if (jsonResponse['findAllBoardDtos'] == null) {
+          return boardList;
+        }
+
         final List<dynamic> jsonList = jsonResponse['findAllBoardDtos'];
 
         for (final item in jsonList) {
@@ -211,8 +221,12 @@ class MyApiClient {
       final Map<String, dynamic> jsonResponse = jsonDecode(utf8.decode(response.bodyBytes));
 
       if (jsonResponse.containsKey('findAllBoardDtos')) {
-        final List<dynamic> jsonList = jsonResponse['findAllBoardDtos'];
+        // 값이 없을 때 빈 리스트를 반환하도록 수정
+        if (jsonResponse['findAllBoardDtos'] == null) {
+          return boardList;
+        }
 
+        final List<dynamic> jsonList = jsonResponse['findAllBoardDtos'];
         for (final item in jsonList) {
           boardList.add(BoardResponseModel.fromJson(item));
         }
