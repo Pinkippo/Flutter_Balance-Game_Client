@@ -26,7 +26,7 @@ class NoMainItemWidget extends GetView<CustomBottomNavgationBarController> {
               height: 20,
             ),
             FloatingActionButton(
-              heroTag: "create_game",
+              heroTag: 'createGame',
               elevation: 10,
               backgroundColor: Colors.white,
               shape: ContinuousRectangleBorder(
