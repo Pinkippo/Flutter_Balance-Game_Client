@@ -1,8 +1,11 @@
 import 'package:flutter_balance_game_client/app.dart';
+import 'package:flutter_balance_game_client/screen/detail/board_detail_page.dart';
 import 'package:flutter_balance_game_client/screen/login_page.dart';
 import 'package:flutter_balance_game_client/screen/main_page.dart';
 import 'package:flutter_balance_game_client/screen/register_page.dart';
 import 'package:get/get.dart';
+
+import '../binding/board_detail_binding.dart';
 
 part 'app_routes.dart';
 
@@ -25,6 +28,11 @@ class AppPages {
     /// 메인 페이지
     GetPage(
       name: Routes.main, page: () => const MainPage(), transition: Transition.fade
+    ),
+    /// 게시글 상세 페이지
+    GetPage(
+      name: Routes.detail, page: () => const BoardDetailPage(), transition: Transition.fade,
+        parameters: const {'boardKey': ''}, binding: BoardDetailBinding()
     )
   ];
 }
