@@ -7,7 +7,6 @@ import 'package:flutter_balance_game_client/common/app_colors.dart';
 class WriteForm extends GetView<WriteController> {
   const WriteForm({super.key});
 
-  /// TODO : 에러 메시지 디자인 수정
   @override
   Widget build(BuildContext context) {
     return Form(
@@ -18,8 +17,7 @@ class WriteForm extends GetView<WriteController> {
           /// 글쓰기 입력 - 제목
           Container(
             height: Get.height * 0.1,
-            padding:
-            EdgeInsets.fromLTRB(Get.width * 0.05, 0, Get.width * 0.05, 0),
+            padding: EdgeInsets.fromLTRB(Get.width * 0.05, 0, Get.width * 0.05, 0),
             child: Container(
               decoration: BoxDecoration(
                 border: Border.all(
@@ -31,6 +29,7 @@ class WriteForm extends GetView<WriteController> {
               child: TextFormField(
                 validator: (value) => controller.validateInput(value ?? ''),
                 decoration: const InputDecoration(
+                  counterText: '',
                   contentPadding: EdgeInsets.symmetric(
                     horizontal: 20,
                     vertical: 10,
@@ -44,12 +43,13 @@ class WriteForm extends GetView<WriteController> {
                   ),
                   errorStyle: TextStyle(
                     fontSize: 14,
-                    color: Colors.redAccent,
+                    color: Colors.white,
                     fontWeight: FontWeight.normal,
                   ),
                 ),
                 maxLines: 3,
-                maxLength: 50,
+                minLines: 3,
+                maxLength: 40,
                 controller: controller.writeTitle,
                 //텍스트 색 변경
                 style: const TextStyle(
@@ -64,16 +64,14 @@ class WriteForm extends GetView<WriteController> {
             ),
           ),
           const SizedBox(
-            height: 40,
+            height: 20,
           ),
 
           /// 글쓰기 입력 - A 보기
           Container(
             height: Get.height * 0.06,
-            padding:
-            EdgeInsets.fromLTRB(Get.width * 0.05, 0, Get.width * 0.05, 0),
+            padding: EdgeInsets.fromLTRB(Get.width * 0.05, 0, Get.width * 0.05, 0),
             child: Container(
-              alignment: Alignment.center,
               decoration: BoxDecoration(
                 border: Border.all(
                   color: AppColors.blackColor, // 연한 회색 테두리
@@ -84,7 +82,11 @@ class WriteForm extends GetView<WriteController> {
               child: TextFormField(
                 validator: (value) => controller.validateInput(value ?? ''),
                 decoration: const InputDecoration(
-                  // 중앙 정렬
+                  counterText: '',
+                  contentPadding: EdgeInsets.symmetric(
+                    horizontal: 20,
+                    vertical: 0,
+                  ),
                   hintText: 'A',
                   hintStyle: TextStyle(
                     fontSize: 18,
@@ -107,6 +109,7 @@ class WriteForm extends GetView<WriteController> {
                 showCursor: false,
                 // 커서때 밑줄 제거
                 cursorOpacityAnimates: false,
+
               ),
             ),
           ),
@@ -146,7 +149,11 @@ class WriteForm extends GetView<WriteController> {
               child: TextFormField(
                 validator: (value) => controller.validateInput(value ?? ''),
                 decoration: const InputDecoration(
-                  // 중앙 정렬
+                  counterText: '',
+                  contentPadding: EdgeInsets.symmetric(
+                    horizontal: 20,
+                    vertical: 0,
+                  ),
                   hintText: 'B',
                   hintStyle: TextStyle(
                     fontSize: 18,
@@ -189,6 +196,7 @@ class WriteForm extends GetView<WriteController> {
               child: TextButton(
                 onPressed: () async {
                   if (controller.formKey.currentState?.validate() ?? false) {
+                    /// TODO : 글작성 로직 연결 및 값처리 + 페이지 이동
                     Get.snackbar(
                       '글쓰기 완료',
                       '글쓰기가 완료되었습니다!',

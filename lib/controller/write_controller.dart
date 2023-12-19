@@ -27,4 +27,8 @@ class WriteController extends GetxController{
         return null;
     }
 
+    /// TODO : 글 작성 로직 추가
+
+
+
 }
