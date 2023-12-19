@@ -13,7 +13,6 @@ class MainWriteTab extends StatelessWidget {
 
     Get.put(WriteController() , permanent: true);
 
-    /// TODO : 글쓰기 로직 및 유효성 검사 추가
     /// TODO : 디자인 수정
     return SingleChildScrollView(
       child: Column(

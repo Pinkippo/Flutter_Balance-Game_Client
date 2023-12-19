@@ -254,6 +254,41 @@ class MyApiClient {
     }
   }
 
+  /// 글쓰기
+  Future<bool> write(String token, String title, String left, String right) async {
+    final url = Uri.parse('$baseUrl/board/regist');
+
+    final response = await http.post(
+      url,
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'Authorization': 'Bearer $token',
+      },
+      body: jsonEncode({
+        'boardTitle': title,
+        'leftContent': left,
+        'rightContent': right,
+      }),
+    );
+
+    print(response.statusCode);
+    print(response.body);
+
+    if (response.statusCode == 200) {
+      return true;
+    } else {
+      Get.snackbar(
+        '글쓰기 실패',
+        '서버 상태가 불안정합니다. 잠시 후 다시 시도해주세요.',
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.redAccent,
+        colorText: Colors.white,
+      );
+      return false;
+    }
+  }
+
 }
 
 

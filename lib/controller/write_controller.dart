@@ -1,9 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_balance_game_client/data/repository/board_repository.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get/get.dart';
 
 /// 글쓰기 입력 정보 Getx Controller
 class WriteController extends GetxController{
+
+    final storage = const FlutterSecureStorage();
 
     final GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
@@ -27,7 +31,18 @@ class WriteController extends GetxController{
         return null;
     }
 
-    /// TODO : 글 작성 로직 추가
+    // 글작성 로직
+    Future<bool> write() async {
+        if (formKey.currentState!.validate()) {
+
+            String? token = await storage.read(key: 'jwtToken');
+            print('jwtToken: = $token');
+            bool result = await BoardRepository().write(token!, writeTitle.text, writeLeft.text, writeRight.text);
+            return result;
+        }
+        return false;
+    }
+
 
 
 

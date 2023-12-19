@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_balance_game_client/controller/bottom_navigator_controller.dart';
+import 'package:flutter_balance_game_client/controller/main_list_by_controller.dart';
 import 'package:flutter_balance_game_client/controller/write_controller.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
 import 'package:flutter_balance_game_client/common/app_colors.dart';
 
@@ -195,16 +198,23 @@ class WriteForm extends GetView<WriteController> {
               ),
               child: TextButton(
                 onPressed: () async {
-                  if (controller.formKey.currentState?.validate() ?? false) {
-                    /// TODO : 글작성 로직 연결 및 값처리 + 페이지 이동
-                    Get.snackbar(
-                      '글쓰기 완료',
-                      '글쓰기가 완료되었습니다!',
-                      snackPosition: SnackPosition.BOTTOM,
-                      backgroundColor: Colors.greenAccent,
-                      colorText: Colors.white,
-                    );
-                  }
+                   Get.showOverlay(
+                    asyncFunction: controller.write,
+                    loadingWidget: Container(
+                      color: Colors.black12,
+                      alignment: Alignment.center,
+                      child: const SpinKitThreeBounce(
+                        color: AppColors.mainRedColor,
+                      ),
+                    ),
+                   ).then((value){
+                     if(value == true) {
+                       controller.clearWriteInput();
+                       Get.find<CustomBottomNavgationBarController>().changeIndex(1);
+                       /// TODO : 상세 페이지 이동
+                       // Get.toNamed('/detail');
+                     }
+                   });
                 },
                 child: const Text(
                   '양자택일 작성하기!',

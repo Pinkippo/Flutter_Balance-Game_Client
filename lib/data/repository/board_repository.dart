@@ -3,7 +3,7 @@ import 'package:flutter_balance_game_client/data/provider/api.dart';
 
 import '../model/board_response_model.dart';
 
-/// 회원 데이터 처리 클래스
+/// 게시판 데이터 처리 클래스
 class BoardRepository{
 
   /// 메인 리스트 호출
@@ -25,6 +25,11 @@ class BoardRepository{
     return MyApiClient().getMainListByHeartOn(
         pageNumber, pageSize, token
     );
+  }
+
+  /// 글쓰기
+  Future<bool> write(String token, String title, String left, String right) async {
+    return MyApiClient().write(token, title, left, right);
   }
 
 
