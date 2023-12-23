@@ -10,8 +10,9 @@ import 'package:http/http.dart' as http;
 import '../model/board_response_model.dart';
 
 /// 양자 택일 AWS 서버
-const baseUrl = 'http://13.209.40.73:8080';
-/// 양자 택일 스웨거 - http://13.209.40.73:8080/swagger-ui/index.html
+const baseUrl = 'http://3.36.88.115:8080';
+
+/// 양자 택일 스웨거 - http://3.36.88.115:8080/swagger-ui/index.html
 
 
 /// http 통신을 위한 클래스
