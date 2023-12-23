@@ -211,8 +211,7 @@ class WriteForm extends GetView<WriteController> {
                      if(value == true) {
                        controller.clearWriteInput();
                        Get.find<CustomBottomNavgationBarController>().changeIndex(1);
-                       /// TODO : 상세 페이지 이동
-                       // Get.toNamed('/detail');
+                       /// TODO : 나중에 상세 페이지 이동
                      }
                    });
                 },

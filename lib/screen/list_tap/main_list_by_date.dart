@@ -48,7 +48,6 @@ class ListByDate extends GetView<ListController> {
                 itemBuilder: (context, index) {
                   return GestureDetector(
                     onTap: () async {
-                      /// TODO : 게시글 상세 페이지 이동 고도화
                       await Get.toNamed('/detail?boardKey=${controller.boardListByDate[index].boardKey}');
                     },
                     child: Card(

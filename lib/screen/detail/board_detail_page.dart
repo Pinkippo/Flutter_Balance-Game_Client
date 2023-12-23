@@ -13,8 +13,9 @@ class BoardDetailPage extends GetView<BoardDetailController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: const Placeholder(),
+      body: Obx(() => Center(child: Text( controller.boardResponseModel.value.boardKey.toString())))
     );
   }
 
 }
+

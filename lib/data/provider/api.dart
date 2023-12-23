@@ -14,10 +14,8 @@ const baseUrl = 'http://3.36.88.115:8080';
 
 /// 양자 택일 스웨거 - http://3.36.88.115:8080/swagger-ui/index.html
 
-
 /// http 통신을 위한 클래스
 class MyApiClient {
-
   /// 회원가입
   Future<bool> register(RegisterRequestModel requestModel) async {
     final url = Uri.parse('$baseUrl/user/join');
@@ -69,7 +67,8 @@ class MyApiClient {
     print(response.body);
 
     if (response.statusCode == 200) {
-      return LoginResponseModel.fromJson(jsonDecode(utf8.decode(response.bodyBytes)));
+      return LoginResponseModel.fromJson(
+          jsonDecode(utf8.decode(response.bodyBytes)));
     } else if (response.statusCode != 200) {
       Get.snackbar(
         '로그인 실패',
@@ -92,8 +91,10 @@ class MyApiClient {
   }
 
   /// 메인 리스트 조회
-  Future<List<BoardResponseModel>> getMainList(int pageNumber, int pageSize, String token) async {
-    final url = Uri.parse('$baseUrl/board/findAllByDate?page=$pageNumber&size=$pageSize');
+  Future<List<BoardResponseModel>> getMainList(
+      int pageNumber, int pageSize, String token) async {
+    final url = Uri.parse(
+        '$baseUrl/board/findAllByDate?page=$pageNumber&size=$pageSize');
 
     final response = await http.get(
       url,
@@ -109,10 +110,10 @@ class MyApiClient {
 
     if (response.statusCode == 200) {
       final List<BoardResponseModel> boardList = [];
-      final Map<String, dynamic> jsonResponse = jsonDecode(utf8.decode(response.bodyBytes));
+      final Map<String, dynamic> jsonResponse =
+          jsonDecode(utf8.decode(response.bodyBytes));
 
       if (jsonResponse.containsKey('findAllBoardDtos')) {
-
         if (jsonResponse['findAllBoardDtos'] == null) {
           return boardList;
         }
@@ -147,8 +148,10 @@ class MyApiClient {
   }
 
   /// 좋아요 순 메인 리스트 조회
-  Future<List<BoardResponseModel>> getMainListByHeart(int pageNumber, int pageSize, String token) async {
-    final url = Uri.parse('$baseUrl/board/findAllByHeart?page=$pageNumber&size=$pageSize');
+  Future<List<BoardResponseModel>> getMainListByHeart(
+      int pageNumber, int pageSize, String token) async {
+    final url = Uri.parse(
+        '$baseUrl/board/findAllByHeart?page=$pageNumber&size=$pageSize');
 
     final response = await http.get(
       url,
@@ -164,10 +167,10 @@ class MyApiClient {
 
     if (response.statusCode == 200) {
       final List<BoardResponseModel> boardList = [];
-      final Map<String, dynamic> jsonResponse = jsonDecode(utf8.decode(response.bodyBytes));
+      final Map<String, dynamic> jsonResponse =
+          jsonDecode(utf8.decode(response.bodyBytes));
 
       if (jsonResponse.containsKey('findAllBoardDtos')) {
-
         if (jsonResponse['findAllBoardDtos'] == null) {
           return boardList;
         }
@@ -202,8 +205,10 @@ class MyApiClient {
   }
 
   /// 내가 좋아요 누른 글 메인 리스트 조회
-  Future<List<BoardResponseModel>> getMainListByHeartOn(int pageNumber, int pageSize, String token) async {
-    final url = Uri.parse('$baseUrl/board/findAllByUserHeart?page=$pageNumber&size=$pageSize');
+  Future<List<BoardResponseModel>> getMainListByHeartOn(
+      int pageNumber, int pageSize, String token) async {
+    final url = Uri.parse(
+        '$baseUrl/board/findAllByUserHeart?page=$pageNumber&size=$pageSize');
 
     final response = await http.get(
       url,
@@ -219,7 +224,8 @@ class MyApiClient {
 
     if (response.statusCode == 200) {
       final List<BoardResponseModel> boardList = [];
-      final Map<String, dynamic> jsonResponse = jsonDecode(utf8.decode(response.bodyBytes));
+      final Map<String, dynamic> jsonResponse =
+          jsonDecode(utf8.decode(response.bodyBytes));
 
       if (jsonResponse.containsKey('findAllBoardDtos')) {
         // 값이 없을 때 빈 리스트를 반환하도록 수정
@@ -256,7 +262,8 @@ class MyApiClient {
   }
 
   /// 글쓰기
-  Future<bool> write(String token, String title, String left, String right) async {
+  Future<bool> write(
+      String token, String title, String left, String right) async {
     final url = Uri.parse('$baseUrl/board/regist');
 
     final response = await http.post(
@@ -290,6 +297,40 @@ class MyApiClient {
     }
   }
 
+  /// 게시글 상세 조회
+  Future<BoardResponseModel> getBoardDetail(String token, int boardKey) async {
+    final url = Uri.parse('$baseUrl/board/detail?boardKey=$boardKey');
+
+    final response = await http.get(
+      url,
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'Authorization': 'Bearer $token',
+      },
+    );
+
+    print(response.statusCode);
+    print(response.body);
+
+    if (response.statusCode == 200) {
+      final Map<String, dynamic> jsonResponse =
+          jsonDecode(utf8.decode(response.bodyBytes));
+      return BoardResponseModel.fromJson(jsonResponse);
+    } else {
+      /// 오류 발생 시 -1번의 키를 가진 빈 모델을 반환
+      return BoardResponseModel(
+        boardKey: -1,
+        userName: '',
+        boardDate: '',
+        boardTitle: '',
+        leftContent: '',
+        rightContent: '',
+        heartCount: 0,
+        leftCount: 0,
+        rightCount: 0,
+        commentList: [],
+      );
+    }
+  }
 }
-
-

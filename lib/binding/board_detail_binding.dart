@@ -6,10 +6,8 @@ import 'package:flutter/material.dart';
 class BoardDetailBinding implements Bindings {
   @override
   void dependencies() async {
-    await Get.putAsync<BoardDetailController>(() async {
+    Get.lazyPut<BoardDetailController>(() {
       return BoardDetailController();
-    }).then((value) async {
-      await value.getBoardDetail();
     });
   }
 }

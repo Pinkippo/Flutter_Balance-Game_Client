@@ -32,5 +32,11 @@ class BoardRepository{
     return MyApiClient().write(token, title, left, right);
   }
 
+  /// 게시글 상세 호출
+  Future<BoardResponseModel> getBoardDetail (String token, int boardKey) async {
+    return MyApiClient().getBoardDetail(
+        token, boardKey
+    );
+  }
 
 }
