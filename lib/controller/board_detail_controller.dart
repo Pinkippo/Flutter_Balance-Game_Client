@@ -10,8 +10,8 @@ class BoardDetailController extends GetxController{
 
   final storage = const FlutterSecureStorage();
 
-  // 스크롤 컨트롤러
-  final ScrollController scrollController = ScrollController();
+  // 댓글 입력 컨트롤러
+  TextEditingController commentContent = TextEditingController();
 
   @override
   void onInit() async {
@@ -41,61 +41,7 @@ class BoardDetailController extends GetxController{
 
     String? token = await storage.read(key: 'jwtToken');
 
-    //boardResponseModel.value = await BoardRepository().getBoardDetail(token!, boardKey);
-
-    // 2초 딜레이
-    await Future.delayed(const Duration(seconds: 1));
-
-    // UI 생성을 위한 가짜 데이터
-    boardResponseModel.value = BoardResponseModel(
-        boardKey: 1,
-        userName: "테스트 유저",
-        boardDate: "2023-12-23T08:58:17.333Z",
-        boardTitle: "일이삼사오육칠팔구십일이삼사오육칠팔구십일이삼사오육칠팔구십일이삼사오육칠팔구십",
-        leftContent: "일이삼사오육칠팔구십일이삼사오육칠팔구십",
-        rightContent: "일이삼사오육칠팔구십일이삼사오육칠팔구십",
-        heartCount: 10,
-        leftCount: 24,
-        rightCount: 35,
-        commentList: [
-          CommentModel(
-             commentContent: "테스트 댓글 1 테스트 댓글 1 테스트 댓글 1 테스트 댓글 1 테스트 댓글 1 테스트 댓글 1 테스트 댓글 1 테스트 댓글 1 ",
-            commentTime: "2023-12-23T08:58:17.333Z",
-            commentKey: 1,
-          ),
-          CommentModel(
-            commentContent: "테스트 댓글 2 테스트 댓글 2 테스트 댓글 2 테스트 댓글 2 테스트 댓글 2 테스트 댓글 2",
-            commentTime: "2023-12-23T08:58:17.333Z",
-            commentKey: 2,
-          ),
-          CommentModel(
-            commentContent: "테스트 댓글 3 테스트 댓글 3",
-            commentTime: "2023-12-23T08:58:17.333Z",
-            commentKey: 3,
-          ),
-          CommentModel(
-            commentContent: "테스트 댓글 4 테스트 댓글 4 테스트 댓글 4 테스트 댓글 4",
-            commentTime: "2023-12-23T08:58:17.333Z",
-            commentKey: 4,
-          ),
-          CommentModel(
-            commentContent: "테스트 댓글 1 테스트 댓글 1 테스트 댓글 1 테스트 댓글 1 테스트 댓글 1 테스트 댓글 1 테스트 댓글 1 테스트 댓글 1 ",
-            commentTime: "2023-12-23T08:58:17.333Z",
-            commentKey: 5,
-          ),
-          CommentModel(
-            commentContent: "테스트 댓글 1 테스트 댓글 1 테스트 댓글 1 테스트 댓글 1 테스트 댓글 1 테스트 댓글 1 테스트 댓글 1 테스트 댓글 1 ",
-            commentTime: "2023-12-23T08:58:17.333Z",
-            commentKey: 6,
-          ),
-          CommentModel(
-            commentContent: "테스트 댓글 1 테스트 댓글 1 테스트 댓글 1 테스트 댓글 1 테스트 댓글 1 테스트 댓글 1 테스트 댓글 1 테스트 댓글 1 ",
-            commentTime: "2023-12-23T08:58:17.333Z",
-            commentKey: 7,
-          ),
-        ]
-    );
-
+    boardResponseModel.value = await BoardRepository().getBoardDetail(token!, boardKey);
 
     if(boardResponseModel.value.boardKey == -1){
       Get.snackbar(
@@ -109,6 +55,49 @@ class BoardDetailController extends GetxController{
       Get.back();
     }
   }
+
+  /// 댓글 작성
+  Future<void> writeComment(int boardKey) async {
+    if(commentContent.text.isEmpty){
+      Get.snackbar(
+        "댓글 작성 실패",
+        "댓글을 입력해주세요",
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.redAccent,
+        colorText: Colors.white,
+        margin: const EdgeInsets.fromLTRB(20, 0, 100, 20),
+      );
+      return;
+    }
+
+    String? token = await storage.read(key: 'jwtToken');
+    await BoardRepository().writeComment(token!, boardKey, commentContent.text);
+
+    // 댓글 작성 후 댓글 리스트에 추가
+    addCommentToModel(
+      CommentModel(
+        // 키를 가장 큰 값으로 설정
+        commentKey: 0,
+        commentTime: DateTime.now().toString(),
+        commentContent: commentContent.text,
+      ),
+    );
+
+
+    commentContent.clear();
+  }
+
+  /// 댓글 추가
+  void addCommentToModel(CommentModel newComment) {
+    boardResponseModel.value.commentList.add(newComment);
+    boardResponseModel.refresh();
+  }
+
+  /// 밸런스 게임 참가
+
+  /// 좋아요 누르기
+
+
 
 
 

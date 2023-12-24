@@ -333,4 +333,40 @@ class MyApiClient {
       );
     }
   }
+
+  /// 댓글 작성
+  Future<bool> writeComment(
+      String token, int boardKey, String content) async {
+    final url = Uri.parse('$baseUrl/comment/regist');
+
+    final response = await http.post(
+      url,
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'Authorization': 'Bearer $token',
+      },
+      body: jsonEncode({
+        'boardKey': boardKey,
+        'commentContent': content,
+      }),
+    );
+
+    print(response.statusCode);
+    print(response.body);
+
+    if (response.statusCode == 200) {
+      return true;
+    } else {
+      Get.snackbar(
+        '댓글 작성 실패',
+        '서버 상태가 불안정합니다. 잠시 후 다시 시도해주세요.',
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.redAccent,
+        colorText: Colors.white,
+      );
+      return false;
+    }
+  }
+
 }

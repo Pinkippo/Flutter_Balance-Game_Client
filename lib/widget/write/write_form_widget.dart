@@ -52,7 +52,7 @@ class WriteForm extends GetView<WriteController> {
                 ),
                 maxLines: 3,
                 minLines: 3,
-                maxLength: 40,
+                maxLength: 60,
                 controller: controller.writeTitle,
                 //텍스트 색 변경
                 style: const TextStyle(

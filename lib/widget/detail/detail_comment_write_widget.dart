@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_balance_game_client/controller/board_detail_controller.dart';
 import 'package:get/get.dart';
 import 'package:flutter_balance_game_client/common/app_colors.dart';
 
-class DetailCommentWriteWidget extends StatelessWidget {
+class DetailCommentWriteWidget extends GetView<BoardDetailController> {
   const DetailCommentWriteWidget({super.key});
 
   @override
@@ -28,7 +29,7 @@ class DetailCommentWriteWidget extends StatelessWidget {
                   ),
                   child: TextField(
                     cursorColor: Colors.white,
-                    //controller: messageController,
+                    controller: controller.commentContent,
                     style: const TextStyle(
                         color: AppColors.blackColor,
                         fontWeight: FontWeight.bold),
@@ -44,8 +45,8 @@ class DetailCommentWriteWidget extends StatelessWidget {
               ),
               const SizedBox(width: 12),
               GestureDetector(
-                onTap: () {
-                  // TODO : 댓글 작성 기능 구현
+                onTap: () async {
+                  await controller.writeComment(controller.boardResponseModel.value.boardKey);
                 },
                 child: Container(
                   height: 45,

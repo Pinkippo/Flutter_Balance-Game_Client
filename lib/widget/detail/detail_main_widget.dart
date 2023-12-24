@@ -23,15 +23,18 @@ class DetailMainWidget extends GetView<BoardDetailController> {
             /// 게시물 제목
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-              width: MediaQuery.of(context).size.width,
+              width: Get.width * 0.9,
               height: 100,
               color: AppColors.backgroundColor,
-              child: Text(
-                controller.boardResponseModel.value.boardTitle,
-                style: const TextStyle(
-                  color: AppColors.blackColor,
-                  fontSize: 24,
-                  fontWeight: FontWeight.bold,
+              child: Center(
+                child: Text(
+                  controller.boardResponseModel.value.boardTitle,
+                  style: const TextStyle(
+                    color: AppColors.blackColor,
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
+                  ),
+                  textAlign: TextAlign.center,
                 ),
               ),
             ),
