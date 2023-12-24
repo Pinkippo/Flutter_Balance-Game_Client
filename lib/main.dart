@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_balance_game_client/common/pref/app_preferences.dart';
 import 'package:flutter_balance_game_client/controller/login_controller.dart';
 import 'package:flutter_balance_game_client/data/repository/auth_repository.dart';
@@ -10,6 +11,12 @@ import 'package:get/get.dart';
 void main() async {
 
   WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
+
+  /// 세로모드 고정
+  await SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+    DeviceOrientation.portraitDown,
+  ]);
 
   /// 스플래시 생성
   FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
