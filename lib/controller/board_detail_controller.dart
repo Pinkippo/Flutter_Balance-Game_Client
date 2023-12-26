@@ -102,4 +102,5 @@ class BoardDetailController extends GetxController{
 
 
 
+
 }
