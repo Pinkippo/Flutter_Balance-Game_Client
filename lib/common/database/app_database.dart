@@ -5,7 +5,7 @@ import 'package:path_provider/path_provider.dart';
 import 'package:sembast/sembast.dart';
 import 'package:sembast/sembast_io.dart';
 
-/// Local Chat DataBase - Sembast Singleton
+/// 좋아요 저장을 위한 로컬 데이터 베이스 - Sembast Singleton
 class AppDatabase {
   static final AppDatabase _singleton = AppDatabase._();
 

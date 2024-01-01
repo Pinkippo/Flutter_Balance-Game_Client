@@ -78,13 +78,19 @@ class BoardDetailPage extends GetView<BoardDetailController> {
               children: [
                 /// 좋아요 버튼
                 IconButton(
-                  onPressed: () {
-                    /// TODO : 좋아요 버튼 클릭 이벤트
+                  onPressed: () async {
+                    /// TODO : 디자인 추가
+                    await controller.changeLike(controller.boardResponseModel.value.boardKey);
                   },
-                  icon: const Icon(
-                    Icons.favorite_border,
-                    size: 30,
-                    color: AppColors.mainRedColor,
+                  icon: Obx(
+                    () => Icon(
+                      /// 좋아요 여부 - 아이콘 변경
+                      controller.isLike.value
+                          ? Icons.favorite
+                          : Icons.favorite_border,
+                      size: 30,
+                      color: AppColors.mainRedColor,
+                    ),
                   ),
                 ),
                 Positioned(

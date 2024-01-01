@@ -369,4 +369,67 @@ class MyApiClient {
     }
   }
 
+  /// 좋아요 추가
+  Future<bool> addLike(String token, int boardKey) async {
+    final url = Uri.parse('$baseUrl/boardHeartHistory/insert');
+
+    final response = await http.post(
+      url,
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'Authorization': 'Bearer $token',
+      },
+      body: jsonEncode({
+        'boardKey': boardKey,
+      }),
+    );
+
+    print(response.statusCode);
+    print(response.body);
+
+    if (response.statusCode == 200) {
+      return true;
+    } else {
+      Get.snackbar(
+        '좋아요 실패',
+        '서버 상태가 불안정합니다. 잠시 후 다시 시도해주세요.',
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.redAccent,
+        colorText: Colors.white,
+      );
+      return false;
+    }
+  }
+
+  /// 좋아요 삭제
+  Future<bool> deleteLike(String token, int boardKey) async {
+    final url = Uri.parse('$baseUrl/boardHeartHistory/delete');
+
+    final response = await http.post(
+      url,
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'Authorization': 'Bearer $token',
+      },
+      body: jsonEncode({
+        'boardKey': boardKey,
+      }),
+    );
+
+    if (response.statusCode == 200) {
+      return true;
+    } else {
+      Get.snackbar(
+        '좋아요 실패',
+        '서버 상태가 불안정합니다. 잠시 후 다시 시도해주세요.',
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.redAccent,
+        colorText: Colors.white,
+      );
+      return false;
+    }
+  }
+
 }

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_balance_game_client/common/database/app_like_dao.dart';
 import 'package:flutter_balance_game_client/data/model/board_response_model.dart';
 import 'package:flutter_balance_game_client/data/model/comment_response_model.dart';
+import 'package:flutter_balance_game_client/data/model/like_model.dart';
 import 'package:flutter_balance_game_client/data/repository/board_repository.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get/get.dart';
@@ -33,6 +35,9 @@ class BoardDetailController extends GetxController{
       commentList: []
   ).obs;
 
+  /// 좋아요 여부
+  RxBool isLike = false.obs;
+
   // 게시물 정보 호출
   Future<void> getBoardDetail() async {
 
@@ -54,6 +59,11 @@ class BoardDetailController extends GetxController{
       );
       Get.back();
     }
+
+    /// 좋아요 여부 확인 후 변경
+    isLike.value = await LikeDao().isLike( boardKey.toString(), token);
+    print("좋아요 여부 : ${isLike.value}");
+
   }
 
   /// 댓글 작성
@@ -97,12 +107,28 @@ class BoardDetailController extends GetxController{
 
   /// 밸런스 게임 참가
 
-  /// 좋아요 누르기
-
-
-
-
-
-
+  /// 좋아요 추가/삭제
+  Future<void> changeLike(int boardKey) async {
+    String? token = await storage.read(key: 'jwtToken');
+    if(isLike.value){
+      await BoardRepository().deleteLike(token!, boardKey).then((value){
+        LikeDao().delete(boardKey.toString(), token).then((value){
+          isLike.value = false;
+          boardResponseModel.value.heartCount -= 1;
+          boardResponseModel.refresh();
+        });
+        print("좋아요 삭제 성공");
+      });
+    }else{
+      await BoardRepository().addLike(token!, boardKey).then((value){
+        LikeDao().insert(LikeModel(boardKey: boardKey.toString(), jwt: token)).then((value){
+          isLike.value = true;
+          boardResponseModel.value.heartCount += 1;
+          boardResponseModel.refresh();
+        });
+        print("좋아요 추가 성공");
+      });
+    }
+  }
 
 }

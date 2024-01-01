@@ -8,7 +8,7 @@ class BoardResponseModel {
   final String boardTitle;
   final String leftContent;
   final String rightContent;
-  final int heartCount;
+  int heartCount;
   // + 단일 조회만 사용
   final int leftCount;
   final int rightCount;

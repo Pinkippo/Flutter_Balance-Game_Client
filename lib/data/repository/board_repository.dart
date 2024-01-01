@@ -44,4 +44,14 @@ class BoardRepository{
     return MyApiClient().writeComment(token, boardKey, content);
   }
 
+  /// 좋아요 추가
+  Future<bool> addLike(String token, int boardKey) async {
+    return MyApiClient().addLike(token, boardKey);
+  }
+
+  /// 좋아요 삭제
+  Future<bool> deleteLike(String token, int boardKey) async {
+    return MyApiClient().deleteLike(token, boardKey);
+  }
+
 }
