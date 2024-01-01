@@ -71,18 +71,20 @@ class BoardDetailController extends GetxController{
     }
 
     String? token = await storage.read(key: 'jwtToken');
-    await BoardRepository().writeComment(token!, boardKey, commentContent.text);
+
+    int createCommentKey = await BoardRepository().writeComment(token!, boardKey, commentContent.text);
+    if(createCommentKey == 0){
+      return;
+    }
 
     // 댓글 작성 후 댓글 리스트에 추가
     addCommentToModel(
       CommentModel(
-        // 키를 가장 큰 값으로 설정
-        commentKey: 0,
+        commentKey: createCommentKey,
         commentTime: DateTime.now().toString(),
         commentContent: commentContent.text,
       ),
     );
-
 
     commentContent.clear();
   }

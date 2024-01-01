@@ -335,7 +335,7 @@ class MyApiClient {
   }
 
   /// 댓글 작성
-  Future<bool> writeComment(
+  Future<int> writeComment(
       String token, int boardKey, String content) async {
     final url = Uri.parse('$baseUrl/comment/regist');
 
@@ -356,7 +356,7 @@ class MyApiClient {
     print(response.body);
 
     if (response.statusCode == 200) {
-      return true;
+      return int.parse(response.body);
     } else {
       Get.snackbar(
         '댓글 작성 실패',
@@ -365,7 +365,7 @@ class MyApiClient {
         backgroundColor: Colors.redAccent,
         colorText: Colors.white,
       );
-      return false;
+      return 0;
     }
   }
 

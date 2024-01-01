@@ -40,7 +40,7 @@ class BoardRepository{
   }
 
   /// 댓글 작성
-  Future<bool> writeComment(String token, int boardKey, String content) async {
+  Future<int> writeComment(String token, int boardKey, String content) async {
     return MyApiClient().writeComment(token, boardKey, content);
   }
 
