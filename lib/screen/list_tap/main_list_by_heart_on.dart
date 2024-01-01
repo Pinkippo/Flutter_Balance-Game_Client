@@ -45,7 +45,7 @@ class ListByHeartOn extends GetView<ListController> {
                 itemBuilder: (context, index) {
                   return GestureDetector(
                     onTap: () async {
-                      await Get.toNamed('/detail?boardKey=${controller.boardListByDate[index].boardKey}');
+                      await Get.toNamed('/detail?boardKey=${controller.boardListByHeartOn[index].boardKey}');
                     },
                     child: Card(
                       elevation: 10,
