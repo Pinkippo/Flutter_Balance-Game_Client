@@ -17,18 +17,34 @@ class LikeDao{
   }
 
   /// 조회 - bool
-  Future<bool> isLike(String boardKey, String jwt) async {
+  Future<bool> isLike(String boardKey, String jwt, String createTime) async {
+
     final finder = Finder(filter: Filter.and([
       Filter.equals('boardKey', boardKey),
       Filter.equals('jwt', jwt),
     ]));
+
     final recordSnapshot = await _chatFolder.findFirst(await _db, finder: finder);
-    if(recordSnapshot == null){
-      return false;
-    }else{
+
+    // Parse createTime as DateTime
+    DateTime createTimeDateTime = DateTime.parse(createTime);
+
+    // timestamp보다 createTime이 더 최신이면 데이터가 초기화되었다고 판단 로컬데이터 삭제 후 false 반환
+    if (recordSnapshot != null) {
+      DateTime timestampDateTime = DateTime.parse(recordSnapshot['timestamp'].toString());
+
+      if (timestampDateTime.compareTo(createTimeDateTime) < 0) {
+        await delete(boardKey, jwt).then((value){
+          print("좋아요 데이터 삭제");
+        });
+        return false;
+      }
       return true;
     }
+
+    return false;
   }
+
 
   /// 삭제
   Future delete(String boardKey, String jwt) async {
@@ -39,5 +55,9 @@ class LikeDao{
     await _chatFolder.delete(await _db, finder: finder);
   }
 
+  /// 전체 삭제
+  Future deleteAll() async {
+    await _chatFolder.delete(await _db);
+  }
 
 }

@@ -61,7 +61,7 @@ class BoardDetailController extends GetxController{
     }
 
     /// 좋아요 여부 확인 후 변경
-    isLike.value = await LikeDao().isLike( boardKey.toString(), token);
+    isLike.value = await LikeDao().isLike( boardKey.toString(), token, boardResponseModel.value.boardDate);
     print("좋아요 여부 : ${isLike.value}");
 
   }
@@ -111,8 +111,8 @@ class BoardDetailController extends GetxController{
   Future<void> changeLike(int boardKey) async {
     String? token = await storage.read(key: 'jwtToken');
     if(isLike.value){
-      await BoardRepository().deleteLike(token!, boardKey).then((value){
-        LikeDao().delete(boardKey.toString(), token).then((value){
+      await BoardRepository().deleteLike(token!, boardKey).then((value) async {
+        await LikeDao().delete(boardKey.toString(), token).then((value){
           isLike.value = false;
           boardResponseModel.value.heartCount -= 1;
           boardResponseModel.refresh();
@@ -120,8 +120,8 @@ class BoardDetailController extends GetxController{
         print("좋아요 삭제 성공");
       });
     }else{
-      await BoardRepository().addLike(token!, boardKey).then((value){
-        LikeDao().insert(LikeModel(boardKey: boardKey.toString(), jwt: token)).then((value){
+      await BoardRepository().addLike(token!, boardKey).then((value) async {
+        await LikeDao().insert(LikeModel(boardKey: boardKey.toString(), jwt: token, timestamp: DateTime.now().toString())).then((value){
           isLike.value = true;
           boardResponseModel.value.heartCount += 1;
           boardResponseModel.refresh();
