@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_balance_game_client/common/app_colors.dart';
 import 'package:flutter_balance_game_client/common/database/app_like_dao.dart';
 import 'package:flutter_balance_game_client/data/model/board_response_model.dart';
 import 'package:flutter_balance_game_client/data/model/comment_response_model.dart';
@@ -53,7 +54,7 @@ class BoardDetailController extends GetxController{
         "조회 실패",
         "게시물을 불러오는데 실패했습니다",
         snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Colors.redAccent,
+        backgroundColor: AppColors.mainRedColor,
         colorText: Colors.white,
         margin: const EdgeInsets.fromLTRB(20, 0, 100, 20),
       );
@@ -73,7 +74,7 @@ class BoardDetailController extends GetxController{
         "댓글 작성 실패",
         "댓글을 입력해주세요",
         snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Colors.redAccent,
+        backgroundColor: AppColors.mainRedColor,
         colorText: Colors.white,
         margin: const EdgeInsets.fromLTRB(20, 0, 100, 20),
       );
@@ -129,6 +130,30 @@ class BoardDetailController extends GetxController{
         print("좋아요 추가 성공");
       });
     }
+  }
+
+  /// 댓글 삭제
+  Future<void> deleteComment(int index) async {
+    String? token = await storage.read(key: 'jwtToken');
+
+    await BoardRepository().deleteComment(
+        token!,
+        boardResponseModel.value.boardKey,
+        boardResponseModel.value.commentList[index].commentKey
+        ).then((value){
+          if(value){
+            boardResponseModel.value.commentList.removeWhere((element) => element.commentKey == boardResponseModel.value.commentList[index].commentKey);
+            boardResponseModel.refresh();
+            Get.snackbar(
+                "댓글 삭제 성공",
+                "댓글을 삭제했습니다",
+                snackPosition: SnackPosition.BOTTOM,
+                backgroundColor: AppColors.mainOrangeColor,
+                colorText: Colors.white,
+                margin: const EdgeInsets.only(bottom: 60, left: 10, right: 10)
+            );
+          }
+    });
   }
 
 }

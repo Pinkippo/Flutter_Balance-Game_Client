@@ -54,4 +54,9 @@ class BoardRepository{
     return MyApiClient().deleteLike(token, boardKey);
   }
 
+  /// 댓글 삭제
+  Future<bool> deleteComment(String token, int boardKey, int commentKey) async {
+    return MyApiClient().deleteComment(token, boardKey, commentKey);
+  }
+
 }

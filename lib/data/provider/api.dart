@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_balance_game_client/common/app_colors.dart';
 import 'package:flutter_balance_game_client/data/model/login_reponse_model.dart';
 import 'package:flutter_balance_game_client/data/model/login_request_model.dart';
 import 'package:flutter_balance_game_client/data/model/register_request_model.dart';
@@ -36,7 +37,7 @@ class MyApiClient {
         '회원가입 실패',
         response.body,
         snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Colors.redAccent,
+        backgroundColor: AppColors.mainRedColor,
         colorText: Colors.white,
       );
       return false;
@@ -45,7 +46,7 @@ class MyApiClient {
         '회원가입 실패',
         '서버 상태가 불안정합니다. 잠시 후 다시 시도해주세요.',
         snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Colors.redAccent,
+        backgroundColor: AppColors.mainRedColor,
         colorText: Colors.white,
       );
       return false;
@@ -74,7 +75,7 @@ class MyApiClient {
         '로그인 실패',
         response.body,
         snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Colors.redAccent,
+        backgroundColor: AppColors.mainRedColor,
         colorText: Colors.white,
       );
       throw Exception('Failed to login');
@@ -83,7 +84,7 @@ class MyApiClient {
         '회원가입 실패',
         '서버 상태가 불안정합니다. 잠시 후 다시 시도해주세요.',
         snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Colors.redAccent,
+        backgroundColor: AppColors.mainRedColor,
         colorText: Colors.white,
       );
       throw Exception('Failed to login');
@@ -130,7 +131,7 @@ class MyApiClient {
           '메인 리스트 조회 실패',
           '서버 상태가 불안정합니다. 잠시 후 다시 시도해주세요.',
           snackPosition: SnackPosition.BOTTOM,
-          backgroundColor: Colors.redAccent,
+          backgroundColor: AppColors.mainRedColor,
           colorText: Colors.white,
         );
         throw Exception('Failed to get main list');
@@ -140,7 +141,7 @@ class MyApiClient {
         '메인 리스트 조회 실패',
         '서버 상태가 불안정합니다. 잠시 후 다시 시도해주세요.',
         snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Colors.redAccent,
+        backgroundColor: AppColors.mainRedColor,
         colorText: Colors.white,
       );
       throw Exception('Failed to get main list');
@@ -187,7 +188,7 @@ class MyApiClient {
           '메인 리스트 조회 실패',
           '서버 상태가 불안정합니다. 잠시 후 다시 시도해주세요.',
           snackPosition: SnackPosition.BOTTOM,
-          backgroundColor: Colors.redAccent,
+          backgroundColor: AppColors.mainRedColor,
           colorText: Colors.white,
         );
         throw Exception('Failed to get main list');
@@ -197,7 +198,7 @@ class MyApiClient {
         '메인 리스트 조회 실패',
         '서버 상태가 불안정합니다. 잠시 후 다시 시도해주세요.',
         snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Colors.redAccent,
+        backgroundColor: AppColors.mainRedColor,
         colorText: Colors.white,
       );
       throw Exception('Failed to get main list');
@@ -244,7 +245,7 @@ class MyApiClient {
           '메인 리스트 조회 실패',
           '서버 상태가 불안정합니다. 잠시 후 다시 시도해주세요.',
           snackPosition: SnackPosition.BOTTOM,
-          backgroundColor: Colors.redAccent,
+          backgroundColor: AppColors.mainRedColor,
           colorText: Colors.white,
         );
         throw Exception('Failed to get main list');
@@ -254,7 +255,7 @@ class MyApiClient {
         '메인 리스트 조회 실패',
         '서버 상태가 불안정합니다. 잠시 후 다시 시도해주세요.',
         snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Colors.redAccent,
+        backgroundColor: AppColors.mainRedColor,
         colorText: Colors.white,
       );
       throw Exception('Failed to get main list');
@@ -290,7 +291,7 @@ class MyApiClient {
         '글쓰기 실패',
         '서버 상태가 불안정합니다. 잠시 후 다시 시도해주세요.',
         snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Colors.redAccent,
+        backgroundColor:  AppColors.mainRedColor,
         colorText: Colors.white,
       );
       return false;
@@ -362,7 +363,7 @@ class MyApiClient {
         '댓글 작성 실패',
         '서버 상태가 불안정합니다. 잠시 후 다시 시도해주세요.',
         snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Colors.redAccent,
+        backgroundColor: AppColors.mainRedColor,
         colorText: Colors.white,
       );
       return 0;
@@ -395,7 +396,7 @@ class MyApiClient {
         '좋아요 실패',
         '서버 상태가 불안정합니다. 잠시 후 다시 시도해주세요.',
         snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Colors.redAccent,
+        backgroundColor: AppColors.mainRedColor,
         colorText: Colors.white,
       );
       return false;
@@ -425,8 +426,51 @@ class MyApiClient {
         '좋아요 실패',
         '서버 상태가 불안정합니다. 잠시 후 다시 시도해주세요.',
         snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Colors.redAccent,
+        backgroundColor: AppColors.mainRedColor,
         colorText: Colors.white,
+      );
+      return false;
+    }
+  }
+
+  /// 댓글 삭제
+  Future<bool> deleteComment(String token, int boardKey ,int commentKey) async {
+    final url = Uri.parse('$baseUrl/comment/delete');
+
+    final response = await http.post(
+      url,
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'Authorization': 'Bearer $token',
+      },
+      body: jsonEncode({
+        'boardKey' : boardKey,
+        'commentKey': commentKey,
+      }),
+    );
+    print("댓글삭제 상태 : ${response.statusCode}");
+
+    if (response.statusCode == 200) {
+      return true;
+    } else if(response.statusCode == 500){
+      Get.snackbar(
+        '댓글 삭제 실패',
+        '본인이 작성한 댓글이 아닙니다.',
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: AppColors.mainRedColor,
+        colorText: Colors.white,
+          margin: const EdgeInsets.only(bottom: 60, left: 10, right: 10)
+      );
+      return false;
+    } else {
+      Get.snackbar(
+        '댓글 삭제 실패',
+        '서버 상태가 불안정합니다. 잠시 후 다시 시도해주세요.',
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: AppColors.mainRedColor,
+        colorText: Colors.white,
+          margin: const EdgeInsets.only(bottom: 60, left: 10, right: 10)
       );
       return false;
     }

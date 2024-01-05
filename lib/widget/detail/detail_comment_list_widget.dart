@@ -14,17 +14,10 @@ class DetailCommentListWidget extends GetView<BoardDetailController> {
     // 카드 형태로 댓글 리스트 출력
     return Obx(
       () {
-
-        // 댓글을 날짜로 정렬
-        List<CommentModel> sortedComments =
-        List.from(controller.boardResponseModel.value.commentList)
-          ..sort((a, b) => b.commentTime.compareTo(a.commentTime));
-
-
         return ListView.builder(
           physics: const NeverScrollableScrollPhysics(),
           shrinkWrap: true,
-          itemCount: sortedComments.length,
+          itemCount: controller.boardResponseModel.value.commentList.length,
           itemBuilder: (context, index) {
             return Container(
               margin: EdgeInsets.fromLTRB(
@@ -52,7 +45,7 @@ class DetailCommentListWidget extends GetView<BoardDetailController> {
 
                   /// 댓글 작성자 정보
                   Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       const SizedBox(
@@ -70,12 +63,20 @@ class DetailCommentListWidget extends GetView<BoardDetailController> {
                         width: 10,
                       ),
                       Text(
-                        convertToFormattedString(sortedComments[index].commentTime),
+                        convertToFormattedString(controller.boardResponseModel.value.commentList[index].commentTime),
                         style: const TextStyle(
                           fontSize: 12,
                           color: Colors.white,
                         ),
                       ),
+                      const Spacer(),
+                      IconButton(
+                          icon: const Icon(Icons.delete, color: AppColors.mainPurpleColor,),
+                          iconSize: 20,
+                          onPressed: () async {
+                            await controller.deleteComment(index);
+                          },
+                      )
                     ],
                   ),
                   const SizedBox(
@@ -84,7 +85,7 @@ class DetailCommentListWidget extends GetView<BoardDetailController> {
 
                   /// 댓글 내용
                   Text(
-                    sortedComments[index].commentContent,
+                    controller.boardResponseModel.value.commentList[index].commentContent,
                     style: const TextStyle(
                       fontSize: 14,
                       color: Colors.white,

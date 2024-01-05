@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_balance_game_client/common/app_colors.dart';
 import 'package:flutter_balance_game_client/data/model/login_reponse_model.dart';
 import 'package:flutter_balance_game_client/data/model/login_request_model.dart';
 import 'package:flutter_balance_game_client/data/model/register_request_model.dart';
@@ -111,7 +112,7 @@ class LoginController extends GetxController{
       Get.snackbar(
           '로그인 요청 실패',
           '아이디와 비밀번호를 확인해주세요.',
-          backgroundColor: Colors.red,
+          backgroundColor: AppColors.mainRedColor,
           colorText: Colors.white,
           snackPosition: SnackPosition.BOTTOM);
       return false;
@@ -143,7 +144,7 @@ class LoginController extends GetxController{
         userId.value == '' ||
         userName.value == '') {
       Get.snackbar('회원가입 요청 실패', '모든 정보를 입력해주세요.',
-          backgroundColor: Colors.red,
+          backgroundColor: AppColors.mainRedColor,
           colorText: Colors.white,
           snackPosition: SnackPosition.BOTTOM);
       return false;
@@ -151,7 +152,7 @@ class LoginController extends GetxController{
 
     if (!comparePassword()) {
       Get.snackbar('회원가입 요청 실패', '비밀번호가 일치하지 않습니다.',
-          backgroundColor: Colors.red,
+          backgroundColor: AppColors.mainRedColor,
           colorText: Colors.white,
           snackPosition: SnackPosition.BOTTOM);
       return false;
