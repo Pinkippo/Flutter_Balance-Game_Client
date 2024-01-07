@@ -3,7 +3,7 @@ import 'package:flutter_balance_game_client/common/app_colors.dart';
 import 'package:flutter_balance_game_client/common/database/app_like_dao.dart';
 import 'package:flutter_balance_game_client/data/model/board_response_model.dart';
 import 'package:flutter_balance_game_client/data/model/comment_response_model.dart';
-import 'package:flutter_balance_game_client/data/model/like_model.dart';
+import 'package:flutter_balance_game_client/data/model/local_database/like_model.dart';
 import 'package:flutter_balance_game_client/data/repository/board_repository.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get/get.dart';

@@ -1,4 +1,4 @@
-import 'package:flutter_balance_game_client/data/model/like_model.dart';
+import 'package:flutter_balance_game_client/data/model/local_database/like_model.dart';
 import 'package:sembast/sembast.dart';
 import 'app_database.dart';
 
@@ -7,13 +7,13 @@ class LikeDao{
 
   static const String folderName = "like";
 
-  final _chatFolder = intMapStoreFactory.store(folderName);
+  final _likeFolder = intMapStoreFactory.store(folderName);
 
   Future<Database> get _db async => await AppDatabase.instance.chatDatabase;
 
   /// 추가
   Future insert(LikeModel likeModel) async {
-    await _chatFolder.add(await _db, likeModel.toMap());
+    await _likeFolder.add(await _db, likeModel.toMap());
   }
 
   /// 조회 - bool
@@ -24,7 +24,7 @@ class LikeDao{
       Filter.equals('jwt', jwt),
     ]));
 
-    final recordSnapshot = await _chatFolder.findFirst(await _db, finder: finder);
+    final recordSnapshot = await _likeFolder.findFirst(await _db, finder: finder);
 
     // Parse createTime as DateTime
     DateTime createTimeDateTime = DateTime.parse(createTime);
@@ -52,12 +52,12 @@ class LikeDao{
       Filter.equals('boardKey', boardKey),
       Filter.equals('jwt', jwt),
     ]));
-    await _chatFolder.delete(await _db, finder: finder);
+    await _likeFolder.delete(await _db, finder: finder);
   }
 
   /// 전체 삭제
   Future deleteAll() async {
-    await _chatFolder.delete(await _db);
+    await _likeFolder.delete(await _db);
   }
 
 }
