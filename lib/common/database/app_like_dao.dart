@@ -9,7 +9,7 @@ class LikeDao{
 
   final _likeFolder = intMapStoreFactory.store(folderName);
 
-  Future<Database> get _db async => await AppDatabase.instance.chatDatabase;
+  Future<Database> get _db async => await AppDatabase.instance.likeDatabase;
 
   /// 추가
   Future insert(LikeModel likeModel) async {

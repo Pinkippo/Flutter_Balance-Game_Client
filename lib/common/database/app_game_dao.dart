@@ -16,7 +16,7 @@ class GameDao{
 
   final _gameFolder = intMapStoreFactory.store(folderName);
 
-  Future<Database> get _db async => await AppDatabase.instance.chatDatabase;
+  Future<Database> get _db async => await AppDatabase.instance.gameDatabase;
 
   /// 추가
   Future insert(GameModel gameModel) async {

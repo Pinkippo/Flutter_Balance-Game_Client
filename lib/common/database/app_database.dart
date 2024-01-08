@@ -11,40 +11,40 @@ class AppDatabase {
 
   static AppDatabase get instance => _singleton;
 
-  Completer<Database>? _chatDbOpenCompleter;
-  Completer<Database>? _alarmDbOpenCompleter;
+  Completer<Database>? _gameDbOpenCompleter;
+  Completer<Database>? _likeDbOpenCompleter;
 
   AppDatabase._();
 
-  Future<Database> get chatDatabase async {
-    if (_chatDbOpenCompleter == null) {
-      _chatDbOpenCompleter = Completer();
-      await _openDatabase();
+  Future<Database> get gameDatabase async {
+    if (_gameDbOpenCompleter == null) {
+      _gameDbOpenCompleter = Completer();
+      await _openGameDatabase();
     }
-    return _chatDbOpenCompleter!.future;
+    return _gameDbOpenCompleter!.future;
   }
 
-  Future _openDatabase() async {
+  Future _openGameDatabase() async {
     final appDocumentDir = await getApplicationDocumentsDirectory();
-    final dbPath = join(appDocumentDir.path, 'chat.db');
+    final dbPath = join(appDocumentDir.path, 'game.db');
 
     final database = await databaseFactoryIo.openDatabase(dbPath);
-    _chatDbOpenCompleter!.complete(database);
+    _gameDbOpenCompleter!.complete(database);
   }
 
-  Future<Database> get alarmDatabase async {
-    if (_alarmDbOpenCompleter == null) {
-      _alarmDbOpenCompleter = Completer();
-      await _openAlarmDatabase();
+  Future<Database> get likeDatabase async {
+    if (_likeDbOpenCompleter == null) {
+      _likeDbOpenCompleter = Completer();
+      await _openLikeDatabase();
     }
-    return _alarmDbOpenCompleter!.future;
+    return _likeDbOpenCompleter!.future;
   }
 
-  Future _openAlarmDatabase() async {
+  Future _openLikeDatabase() async {
     final appDocumentDir = await getApplicationDocumentsDirectory();
-    final alarmDbPath = join(appDocumentDir.path, 'alarm.db');
+    final alarmDbPath = join(appDocumentDir.path, 'like.db');
 
     final alarmDatabase = await databaseFactoryIo.openDatabase(alarmDbPath);
-    _alarmDbOpenCompleter!.complete(alarmDatabase);
+    _likeDbOpenCompleter!.complete(alarmDatabase);
   }
 }
