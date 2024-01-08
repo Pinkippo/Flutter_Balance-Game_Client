@@ -59,4 +59,9 @@ class BoardRepository{
     return MyApiClient().deleteComment(token, boardKey, commentKey);
   }
 
+  /// 게임 참여
+  Future<bool> addGame(String token, int boardKey, String result) async {
+    return MyApiClient().addGame(token, boardKey, result);
+  }
+
 }

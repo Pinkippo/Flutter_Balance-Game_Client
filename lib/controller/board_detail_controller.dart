@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_balance_game_client/common/app_colors.dart';
+import 'package:flutter_balance_game_client/common/database/app_game_dao.dart';
 import 'package:flutter_balance_game_client/common/database/app_like_dao.dart';
 import 'package:flutter_balance_game_client/data/model/board_response_model.dart';
 import 'package:flutter_balance_game_client/data/model/comment_response_model.dart';
+import 'package:flutter_balance_game_client/data/model/local_database/game_model.dart';
 import 'package:flutter_balance_game_client/data/model/local_database/like_model.dart';
 import 'package:flutter_balance_game_client/data/repository/board_repository.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -39,6 +41,9 @@ class BoardDetailController extends GetxController{
   /// 좋아요 여부
   RxBool isLike = false.obs;
 
+  /// 게임 참여 여부
+  Rx<GameStatus> isGame = GameStatus.none.obs;
+
   // 게시물 정보 호출
   Future<void> getBoardDetail() async {
 
@@ -64,6 +69,10 @@ class BoardDetailController extends GetxController{
     /// 좋아요 여부 확인 후 변경
     isLike.value = await LikeDao().isLike( boardKey.toString(), token, boardResponseModel.value.boardDate);
     print("좋아요 여부 : ${isLike.value}");
+
+    /// 게임 참여 여부 확인 후 변경
+    isGame.value = await GameDao().isAlreadyGame(boardKey.toString(), token, boardResponseModel.value.boardDate);
+    print("게임 참여 여부 : ${isGame.value}");
 
   }
 
@@ -107,6 +116,28 @@ class BoardDetailController extends GetxController{
   }
 
   /// 밸런스 게임 참가
+  Future<void> addGame(GameStatus status) async{
+    String? token = await storage.read(key: 'jwtToken');
+    if(status == GameStatus.left){
+      await BoardRepository().addGame(token!, boardResponseModel.value.boardKey, "left").then((value) async {
+        await GameDao().insert(GameModel(boardKey: boardResponseModel.value.boardKey.toString(), jwt: token, result: "left", timestamp: DateTime.now().toString())).then((value){
+          isGame.value = GameStatus.left;
+          boardResponseModel.value.leftCount += 1;
+          boardResponseModel.refresh();
+        });
+      });
+    }else if(status == GameStatus.right){
+      await BoardRepository().addGame(token!, boardResponseModel.value.boardKey, "right").then((value) async {
+        await GameDao().insert(GameModel(boardKey: boardResponseModel.value.boardKey.toString(), jwt: token, result: "right", timestamp: DateTime.now().toString())).then((value){
+          isGame.value = GameStatus.right;
+          boardResponseModel.value.rightCount += 1;
+          boardResponseModel.refresh();
+        });
+      });
+    }else{
+      return;
+    }
+  }
 
   /// 좋아요 추가/삭제
   Future<void> changeLike(int boardKey) async {

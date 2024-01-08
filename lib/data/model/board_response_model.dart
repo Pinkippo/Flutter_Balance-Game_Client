@@ -8,10 +8,13 @@ class BoardResponseModel {
   final String boardTitle;
   final String leftContent;
   final String rightContent;
+
   int heartCount;
+
   // + 단일 조회만 사용
-  final int leftCount;
-  final int rightCount;
+  int leftCount;
+  int rightCount;
+
   // 댓글 리스트
   final List<CommentModel> commentList;
 

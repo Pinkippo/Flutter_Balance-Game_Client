@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 /// 게임 참여 여부 저장을 위한 로컬 스토리지 모델
+/// TODO : jwt를 Uid로 변경해서 사용해야함
 class GameModel {
 
   @override

@@ -476,4 +476,31 @@ class MyApiClient {
     }
   }
 
+  /// 게임 참여
+  Future<bool> addGame(String token, int boardKey, String result) async {
+    final url = Uri.parse('$baseUrl/boardGame/start');
+
+    final response = await http.post(
+      url,
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'Authorization': 'Bearer $token',
+      },
+      body: jsonEncode({
+        'boardKey': boardKey,
+        'result': result,
+      }),
+    );
+
+    print(response.statusCode);
+    print(response.body);
+
+    if (response.statusCode == 200) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
 }

@@ -1,8 +1,12 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_balance_game_client/common/app_colors.dart';
 import 'package:flutter_balance_game_client/common/util.dart';
 import 'package:flutter_balance_game_client/controller/board_detail_controller.dart';
 import 'package:get/get.dart';
+
+import '../../common/database/app_game_dao.dart';
 
 /// 게시글 상세 페이지 - 정보 위젯
 class DetailMainWidget extends GetView<BoardDetailController> {
@@ -48,16 +52,18 @@ class DetailMainWidget extends GetView<BoardDetailController> {
               width: Get.width * 0.9,
               height: 75,
               child: ElevatedButton(
-                onPressed: () {
-                  /// TODO : 게시글 왼쪽 값 클릭 이벤트
+                onPressed: () async {
+
+                  if(controller.isGame.value != GameStatus.none){
+                    return;
+                  }
+
+                  await controller.addGame(GameStatus.left);
                 },
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: AppColors.blackColor,
+                  backgroundColor: controller.isGame.value == GameStatus.left ? AppColors.mainRedColor : AppColors.blackColor,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10),
-                    side: const BorderSide(
-                      color: AppColors.blackColor,
-                    ),
                   ),
                 ),
                 child: Padding(
@@ -67,7 +73,11 @@ class DetailMainWidget extends GetView<BoardDetailController> {
                   ),
                   child: Center(
                     child: Text(
-                      controller.boardResponseModel.value.leftContent,
+                      controller.isGame.value == GameStatus.none ? controller.boardResponseModel.value.leftContent :
+                          // leftCount + rightCount를 계산해서 퍼센트를 구해서 표시
+                      "${controller.boardResponseModel.value.leftContent.toString()} \n (${getPercent(controller.boardResponseModel.value.leftCount,
+                          controller.boardResponseModel.value.leftCount + controller.boardResponseModel.value.rightCount)}%)",
+                      textAlign: TextAlign.center,
                       style: const TextStyle(
                         fontSize: 18,
                         color: Colors.white,
@@ -102,16 +112,18 @@ class DetailMainWidget extends GetView<BoardDetailController> {
               width: Get.width * 0.9,
               height: 75,
               child: ElevatedButton(
-                onPressed: () {
-                  /// TODO : 게시글 오른쪽 값 클릭 이벤트
+                onPressed: () async {
+
+                  if(controller.isGame.value != GameStatus.none){
+                    return;
+                  }
+
+                  await controller.addGame(GameStatus.right);
                 },
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: AppColors.blackColor,
+                  backgroundColor: controller.isGame.value == GameStatus.right ? AppColors.mainRedColor : AppColors.blackColor,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10),
-                    side: const BorderSide(
-                      color: AppColors.blackColor,
-                    ),
                   ),
                 ),
                 child: Padding(
@@ -121,7 +133,10 @@ class DetailMainWidget extends GetView<BoardDetailController> {
                   ),
                   child: Center(
                     child: Text(
-                      controller.boardResponseModel.value.rightContent,
+                      controller.isGame.value == GameStatus.none ? controller.boardResponseModel.value.rightContent :
+                      "${controller.boardResponseModel.value.rightContent.toString()} \n (${getPercent(controller.boardResponseModel.value.rightCount,
+                          controller.boardResponseModel.value.leftCount + controller.boardResponseModel.value.rightCount)}%)",
+                      textAlign: TextAlign.center,
                       style: const TextStyle(
                         fontSize: 18,
                         color: Colors.white,
