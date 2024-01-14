@@ -9,22 +9,27 @@ class LoginPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: AppColors.backgroundColor,
-      body : SingleChildScrollView(
-        child: SizedBox(
-          height: Get.height,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children:[
-              /// 양자택일 로고
-              Image.asset(
-                'assets/images/logo.png',
-                width: 800,
-              ),
-              /// 로그인 입력 폼 위젯
-              const LoginForm(),
-            ],
+    return GestureDetector(
+      onTap: (){
+        FocusScope.of(context).unfocus();
+      },
+      child: Scaffold(
+        backgroundColor: AppColors.backgroundColor,
+        body : SingleChildScrollView(
+          child: SizedBox(
+            height: Get.height,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children:[
+                /// 양자택일 로고
+                Image.asset(
+                  'assets/images/logo.png',
+                  width: 800,
+                ),
+                /// 로그인 입력 폼 위젯
+                const LoginForm(),
+              ],
+            ),
           ),
         ),
       ),

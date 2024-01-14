@@ -9,17 +9,22 @@ class RegisterPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: AppColors.backgroundColor,
-      body: SingleChildScrollView(
-        child: SizedBox(
-          height: Get.height,
-          child: const Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              /// 회원가입 입력 폼 위젯
-              RegisterForm(),
-            ],
+    return GestureDetector(
+      onTap: (){
+        FocusScope.of(context).unfocus();
+      },
+      child: Scaffold(
+        backgroundColor: AppColors.backgroundColor,
+        body: SingleChildScrollView(
+          child: SizedBox(
+            height: Get.height,
+            child: const Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                /// 회원가입 입력 폼 위젯
+                RegisterForm(),
+              ],
+            ),
           ),
         ),
       ),

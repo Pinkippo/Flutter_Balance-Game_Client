@@ -14,25 +14,30 @@ class MainWriteTab extends StatelessWidget {
     Get.put(WriteController() , permanent: true);
 
     /// TODO : 디자인 수정
-    return SingleChildScrollView(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          /// 글쓰는 로고
-          Container(
-            height: Get.height * 0.2,
-            decoration: const BoxDecoration(
-              image: DecorationImage(
-                image: AssetImage('assets/images/logo.png'),
-                fit: BoxFit.fitHeight,
+    return GestureDetector(
+      onTap: (){
+        FocusScope.of(context).unfocus();
+      },
+      child: SingleChildScrollView(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            /// 글쓰는 로고
+            Container(
+              height: Get.height * 0.2,
+              decoration: const BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage('assets/images/logo.png'),
+                  fit: BoxFit.fitHeight,
+                ),
               ),
             ),
-          ),
 
-          /// 글쓰기 입력 폼
-          const WriteForm(),
+            /// 글쓰기 입력 폼
+            const WriteForm(),
 
-        ],
+          ],
+        ),
       ),
     );
   }
