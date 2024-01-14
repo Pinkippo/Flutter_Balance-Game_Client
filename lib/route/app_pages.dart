@@ -2,6 +2,7 @@ import 'package:flutter_balance_game_client/app.dart';
 import 'package:flutter_balance_game_client/screen/detail/board_detail_page.dart';
 import 'package:flutter_balance_game_client/screen/login_page.dart';
 import 'package:flutter_balance_game_client/screen/main_page.dart';
+import 'package:flutter_balance_game_client/screen/mypage/secession_page.dart';
 import 'package:flutter_balance_game_client/screen/register_page.dart';
 import 'package:get/get.dart';
 
@@ -33,6 +34,10 @@ class AppPages {
     GetPage(
       name: Routes.detail, page: () => const BoardDetailPage(), transition: Transition.fade,
         parameters: const {'boardKey': ''}, binding: BoardDetailBinding()
-    )
+    ),
+    /// 회원탈퇴 페이지
+    GetPage(
+      name: Routes.secession, page: () => const SecessionPage(), transition: Transition.fade
+    ),
   ];
 }

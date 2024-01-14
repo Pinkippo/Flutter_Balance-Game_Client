@@ -71,8 +71,8 @@ class MainMypageTap extends GetView<LoginController> {
           MyPageListItem(
             icon: Icons.delete,
             title: '회원 탈퇴',
-            onTap: () {
-              // TODO: 회원탈퇴 페이지 이동 후 구현
+            onTap: () async {
+              await Get.toNamed('/secession');
             },
           ),
           const MyPageTitleWidget(title: '알림'),
