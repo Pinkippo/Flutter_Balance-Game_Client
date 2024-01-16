@@ -12,5 +12,9 @@ class AuthRepository{
   register(RegisterRequestModel registerRequestModel) {
     return MyApiClient().register(registerRequestModel);
   }
+
+  secession(String token, String password) {
+    return MyApiClient().secession(token, password);
+  }
   
 }

@@ -91,6 +91,33 @@ class MyApiClient {
     }
   }
 
+  /// 회원 탈퇴
+  Future<bool> secession(String token, String password) async {
+    final url = Uri.parse('$baseUrl/user/delete');
+
+    final response = await http.post(
+      url,
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $token',
+      },
+      body: jsonEncode({
+        'pw': password,
+      }),
+    );
+
+    print(response.statusCode);
+    print(response.body);
+
+    if(response.statusCode == 200) {
+      return true;
+    }else if(response.statusCode == 500){
+      return false;
+    }else{
+      return false;
+    }
+  }
+
   /// 메인 리스트 조회
   Future<List<BoardResponseModel>> getMainList(
       int pageNumber, int pageSize, String token) async {

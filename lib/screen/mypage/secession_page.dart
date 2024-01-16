@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_balance_game_client/common/app_colors.dart';
+import 'package:flutter_balance_game_client/common/database/app_game_dao.dart';
+import 'package:flutter_balance_game_client/common/database/app_like_dao.dart';
 import 'package:flutter_balance_game_client/controller/login_controller.dart';
 import 'package:flutter_balance_game_client/controller/secession_controller.dart';
 import 'package:get/get.dart';
@@ -131,6 +134,7 @@ class SecessionPage extends GetView<SecessionController> {
                             return;
                           }
 
+                          /// 바텀 시트
                           Get.bottomSheet(
                             backgroundColor: Colors.transparent,
                             enableDrag: true,
@@ -159,8 +163,34 @@ class SecessionPage extends GetView<SecessionController> {
                                         padding: const EdgeInsets.symmetric(
                                             vertical: 12.0), //버튼 위아래 패딩 크기 늘리기
                                       ),
-                                      onPressed: () {
-                                        /// TODO : 회원 탈퇴 기능 구현
+                                      onPressed: () async {
+                                        await controller.secession().then((value){
+                                          if(value){
+                                            // 메인 이동 + 로컬 디비 삭제 + 스낵바
+                                            Get.offAllNamed('/login');
+
+                                            /// TODO : UserId에 해당하는 데이터만 삭제하기
+                                            GameDao().deleteAll();
+                                            LikeDao().deleteAll();
+                                            Get.snackbar(
+                                              '회원 탈퇴 완료',
+                                              '언제든지 다시 찾아오세요!',
+                                              snackPosition: SnackPosition.BOTTOM,
+                                              backgroundColor: AppColors.mainOrangeColor,
+                                              colorText: Colors.white,
+                                            );
+                                          }else{
+                                            // 바텀시트 닫기 + 스낵바
+                                            Get.back();
+                                            Get.snackbar(
+                                              '회원 탈퇴 실패',
+                                              '비밀번호가 일치하지 않습니다.',
+                                              snackPosition: SnackPosition.BOTTOM,
+                                              backgroundColor: AppColors.mainRedColor,
+                                              colorText: Colors.white,
+                                            );
+                                          }
+                                        });
                                       },
                                       child: const Center(
                                         child: Text(
