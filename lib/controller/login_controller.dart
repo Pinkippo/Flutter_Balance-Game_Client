@@ -40,7 +40,7 @@ class LoginController extends GetxController{
   /// 딥링크 url
   final RxString deepLinkString = RxString('');
 
-  changeLoginState() {
+  changeDeepLinkState() {
     firstEnter.value = false;
   }
 

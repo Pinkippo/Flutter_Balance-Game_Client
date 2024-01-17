@@ -13,6 +13,7 @@ class ListController extends GetxController{
 
   final storage = const FlutterSecureStorage();
 
+  /// 딥링크 스트림
   StreamSubscription? _sub;
 
   /// 페이지 번호 - 날짜순
@@ -47,11 +48,13 @@ class ListController extends GetxController{
 
   @override
   void onInit() async {
-    // 게시물 리스트에 초기 조회순 20개 추가
+
+    /// 게시물 리스트에 초기 조회순 20개 추가
     await addBoardList(0);
     await addBoardList(1);
     await addBoardList(2);
 
+    /// 백그라운드 딥링크 처리
     _handleIncomingLinks();
 
     super.onInit();
@@ -59,25 +62,24 @@ class ListController extends GetxController{
 
   @override
   void dispose() {
+    // 딥링크 스트림 해제
     _sub?.cancel();
     super.dispose();
   }
 
-  /// Handle incoming links - the ones that the app will recieve from the OS
-  /// while already started.
+  /// 백그라운드 딥링크 처리
   void _handleIncomingLinks() {
     if (!kIsWeb) {
       _sub = uriLinkStream.listen((Uri? uri) {
         if(uri == null) {
           return;
         }
-        print('got uri: $uri');
-        // 디테일 페이지 추가
-        // ?boardKey=1 에서 1을 가져와서 디테일 페이지로 이동
         String boardKey = uri.queryParameters['boardKey'] ?? '';
+
+        /// 딥링크로 들어온 경우 디테일 페이지 스택 추가
         Get.toNamed('/detail?boardKey=$boardKey');
       }, onError: (Object err) {
-        print('got err: $err');
+        print('딥링크 에러 => $err');
       });
     }
   }

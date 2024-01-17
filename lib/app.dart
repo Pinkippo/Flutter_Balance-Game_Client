@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_balance_game_client/common/app_colors.dart';
 import 'package:flutter_balance_game_client/screen/login_page.dart';
 import 'package:flutter_balance_game_client/screen/main_page.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
@@ -24,35 +25,40 @@ class _AppState extends State<App> with SingleTickerProviderStateMixin {
   void initState() {
 
     /// TODO : FCM 설정, 알림 설정에 의한 앱 실행 로직 처리
+
+    /// 앱 시작 초기 딥링크 처리
     _handleInitialUri();
 
+    /// 스플래시 제거
     FlutterNativeSplash.remove();
 
     super.initState();
   }
 
-  /// Handle the initial Uri - the one the app was started with
-  ///
-  /// **ATTENTION**: `getInitialLink`/`getInitialUri` should be handled
-  /// ONLY ONCE in your app's lifetime, since it is not meant to change
-  /// throughout your app's life.
-  ///
-  /// We handle all exceptions, since it is called from initState.
+  /// 앱 시작 초기 딥링크 처리 -
   Future<void> _handleInitialUri() async {
-    // In this example app this is an almost useless guard, but it is here to
-    // show we are not going to call getInitialUri multiple times, even if this
-    // was a weidget that will be disposed of (ex. a navigation route change).
     if (Get.find<LoginController>().firstEnter.value) {
-
-      Get.find<LoginController>().changeLoginState();
-
+      // 초기 진입 시 딥링크 flag 변경
+      Get.find<LoginController>().changeDeepLinkState();
+      // 딥링크 URL
       final uri = await getInitialUri();
-
       if (uri == null) {
-        print('no initial uri');
+        print('딥링크 없음');
+
+        /// 로그인 O - 디테일 페이지 생성
       } else if(uri.toString().contains('detail?boardKey=') && Get.find<LoginController>().isLogin) {
-        print('got initial uri: $uri');
+        print("딥링크 + 로그인 O");
         Get.toNamed('/detail?boardKey=${uri.queryParameters['boardKey']}');
+      }else if(uri.toString().contains('detail?boardKey=') && !Get.find<LoginController>().isLogin) {
+        print("딥링크 + 로그인 X");
+        Get.snackbar(
+          '로그인 필요',
+          '로그인 후 이용해주세요.',
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: AppColors.mainRedColor,
+          colorText: Colors.white,
+          duration: const Duration(seconds: 2),
+        );
       }
     }
   }
