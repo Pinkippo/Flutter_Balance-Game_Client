@@ -34,6 +34,20 @@ class LoginController extends GetxController{
   final RxString loginUserId = RxString(''); // 아이디
   final RxString loginUserPw = RxString(''); // 비밀번호
 
+  /// 첫 입장 여부
+  final RxBool firstEnter = true.obs;
+
+  /// 딥링크 url
+  final RxString deepLinkString = RxString('');
+
+  changeLoginState() {
+    firstEnter.value = false;
+  }
+
+  changeDeepLinkUrl(String url) {
+    deepLinkString.value = url;
+  }
+
   /// Controller -> onInit() 완료 후 실행 됨
   @override
   void onInit() async {

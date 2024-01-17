@@ -1,14 +1,19 @@
-import 'package:flutter/material.dart';
+import 'dart:async';
+
+import 'package:flutter/foundation.dart';
 import 'package:flutter_balance_game_client/data/model/board_response_model.dart';
 import 'package:flutter_balance_game_client/data/repository/board_repository.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get/get.dart';
+import 'package:uni_links/uni_links.dart';
 
 
 
 class ListController extends GetxController{
 
   final storage = const FlutterSecureStorage();
+
+  StreamSubscription? _sub;
 
   /// 페이지 번호 - 날짜순
   RxInt pageNumberByDate = 0.obs;
@@ -47,7 +52,34 @@ class ListController extends GetxController{
     await addBoardList(1);
     await addBoardList(2);
 
+    _handleIncomingLinks();
+
     super.onInit();
+  }
+
+  @override
+  void dispose() {
+    _sub?.cancel();
+    super.dispose();
+  }
+
+  /// Handle incoming links - the ones that the app will recieve from the OS
+  /// while already started.
+  void _handleIncomingLinks() {
+    if (!kIsWeb) {
+      _sub = uriLinkStream.listen((Uri? uri) {
+        if(uri == null) {
+          return;
+        }
+        print('got uri: $uri');
+        // 디테일 페이지 추가
+        // ?boardKey=1 에서 1을 가져와서 디테일 페이지로 이동
+        String boardKey = uri.queryParameters['boardKey'] ?? '';
+        Get.toNamed('/detail?boardKey=$boardKey');
+      }, onError: (Object err) {
+        print('got err: $err');
+      });
+    }
   }
 
   /// 페이지 번호 수정
