@@ -50,13 +50,19 @@ dependencies:
   flutter_secure_storage:
   sembast: ^3.5.0+1
 
-  # ui
+  #ui
   flutter_spinkit: ^5.2.0
   flutter_animated_dialog: ^2.0.1
   flutter_native_splash: ^2.3.3
 
   #deeplink
   uni_links: ^0.5.1
+
+  #kakao
+  kakao_flutter_sdk_share: ^1.8.0
+
+  #env
+  flutter_dotenv: ^5.0.2
 
 
   # The following adds the Cupertino Icons font to your application.
@@ -88,6 +94,7 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - assets/images/
+    - assets/config/.env
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
