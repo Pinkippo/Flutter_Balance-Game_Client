@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_balance_game_client/common/app_colors.dart';
+import 'package:flutter_balance_game_client/common/share/kakao_share_manager.dart';
 import 'package:flutter_balance_game_client/controller/board_detail_controller.dart';
 import 'package:flutter_balance_game_client/widget/detail/detail_comment_list_widget.dart';
 import 'package:flutter_balance_game_client/widget/detail/detail_comment_write_widget.dart';
@@ -94,7 +95,7 @@ class BoardDetailPage extends GetView<BoardDetailController> {
                   ),
                 ),
                 Positioned(
-                  bottom: 0,
+                  bottom: -2,
                   child: Obx(
                     () => Text(
                       controller.boardResponseModel.value.heartCount.toString(),
@@ -103,6 +104,40 @@ class BoardDetailPage extends GetView<BoardDetailController> {
                         color: AppColors.blackColor,
                       ),
                     ),
+                  ),
+                ),
+              ],
+            ),
+            /// 공유하기 버튼
+            Stack(
+              alignment: Alignment.center,
+              children: [
+                IconButton(
+                  onPressed: () async {
+                    KakaoShareManager().shareMyCode(
+                      ShareModel(
+                        title: controller.boardResponseModel.value.boardTitle,
+                        url: "yangjataekil://detail?boardKey=${controller.boardResponseModel.value.boardKey}",
+                        likeCount: controller.boardResponseModel.value.heartCount.toString(),
+                        commentCount: controller.boardResponseModel.value.commentList.length.toString(),
+                        boardKey: controller.boardResponseModel.value.boardKey.toString(),
+                      ),
+                    );
+                  },
+                  icon: const Icon(
+                    Icons.share,
+                    size: 30,
+                    color: AppColors.mainRedColor,
+                  ),
+                ),
+                  const Positioned(
+                  bottom: -2,
+                  child: Text(
+                      "공유하기",
+                      style: TextStyle(
+                        fontSize: 10,
+                        color: AppColors.blackColor,
+                      ),
                   ),
                 ),
               ],

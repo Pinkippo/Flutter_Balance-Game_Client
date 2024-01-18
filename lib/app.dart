@@ -6,6 +6,7 @@ import 'package:flutter_balance_game_client/screen/login_page.dart';
 import 'package:flutter_balance_game_client/screen/main_page.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:get/get.dart';
+import 'package:kakao_flutter_sdk_share/kakao_flutter_sdk_share.dart';
 import 'package:uni_links/uni_links.dart';
 
 import 'controller/login_controller.dart';
@@ -40,16 +41,17 @@ class _AppState extends State<App> with SingleTickerProviderStateMixin {
     if (Get.find<LoginController>().firstEnter.value) {
       // 초기 진입 시 딥링크 flag 변경
       Get.find<LoginController>().changeDeepLinkState();
+
       // 딥링크 URL
       final uri = await getInitialUri();
       if (uri == null) {
         print('딥링크 없음');
 
         /// 로그인 O - 디테일 페이지 생성
-      } else if(uri.toString().contains('detail?boardKey=') && Get.find<LoginController>().isLogin) {
+      } else if(uri.toString().contains('boardKey=') && Get.find<LoginController>().isLogin) {
         print("딥링크 + 로그인 O");
         Get.toNamed('/detail?boardKey=${uri.queryParameters['boardKey']}');
-      }else if(uri.toString().contains('detail?boardKey=') && !Get.find<LoginController>().isLogin) {
+      }else if(uri.toString().contains('boardKey=') && !Get.find<LoginController>().isLogin) {
         print("딥링크 + 로그인 X");
         Get.snackbar(
           '로그인 필요',
