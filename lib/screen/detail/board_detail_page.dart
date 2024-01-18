@@ -95,7 +95,7 @@ class BoardDetailPage extends GetView<BoardDetailController> {
                   ),
                 ),
                 Positioned(
-                  bottom: -2,
+                  bottom: 0,
                   child: Obx(
                     () => Text(
                       controller.boardResponseModel.value.heartCount.toString(),
@@ -131,7 +131,7 @@ class BoardDetailPage extends GetView<BoardDetailController> {
                   ),
                 ),
                   const Positioned(
-                  bottom: -2,
+                  bottom: 0,
                   child: Text(
                       "공유하기",
                       style: TextStyle(

@@ -40,7 +40,7 @@ class KakaoShareManager {
       await ShareClient.instance.launchKakaoTalk(uri);
     }else{
       Uri shareUrl = await WebSharerClient.instance.makeDefaultUrl(template: template);
-      await launchBrowserTab(shareUrl, popupOpen: true);
+      await launchBrowserTab(shareUrl, popupOpen: false);
     }
   }
 
