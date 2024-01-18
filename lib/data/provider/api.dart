@@ -2,9 +2,11 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_balance_game_client/common/app_colors.dart';
+import 'package:flutter_balance_game_client/controller/login_controller.dart';
 import 'package:flutter_balance_game_client/data/model/login_reponse_model.dart';
 import 'package:flutter_balance_game_client/data/model/login_request_model.dart';
 import 'package:flutter_balance_game_client/data/model/register_request_model.dart';
+import 'package:flutter_balance_game_client/data/model/user_response_model.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 
@@ -115,6 +117,41 @@ class MyApiClient {
       return false;
     }else{
       return false;
+    }
+  }
+
+  /// 회원 정보 조회
+  Future<UserResponseModel> getUserInfo(String token) async {
+    final url = Uri.parse('$baseUrl/user/profile');
+
+    final response = await http.get(
+      url,
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $token',
+      },
+    );
+
+    print(response.statusCode);
+    print(response.body);
+
+    if (response.statusCode == 200) {
+      return UserResponseModel.fromJson(
+          jsonDecode(utf8.decode(response.bodyBytes)));
+    } else if(response.statusCode == 403){
+      return UserResponseModel(
+        userId: '',
+        userName: '',
+        message: LoginState.loginExpired,
+        userEmail: '',
+      );
+    } else{
+      return UserResponseModel(
+        userId: '',
+        userName: '',
+        message: LoginState.logout,
+        userEmail: '',
+      );
     }
   }
 

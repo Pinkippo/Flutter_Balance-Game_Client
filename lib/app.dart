@@ -48,14 +48,14 @@ class _AppState extends State<App> with SingleTickerProviderStateMixin {
         print('딥링크 없음');
 
         /// 로그인 O - 디테일 페이지 생성
-      } else if(uri.toString().contains('boardKey=') && Get.find<LoginController>().isLogin) {
+      } else if(uri.toString().contains('boardKey=') && Get.find<LoginController>().loginState.value == LoginState.login) {
         print("딥링크 + 로그인 O");
         Get.toNamed('/detail?boardKey=${uri.queryParameters['boardKey']}');
-      }else if(uri.toString().contains('boardKey=') && !Get.find<LoginController>().isLogin) {
+      }else if(uri.toString().contains('boardKey=') && Get.find<LoginController>().loginState.value != LoginState.login) {
         print("딥링크 + 로그인 X");
         Get.snackbar(
           '로그인 필요',
-          '로그인 후 이용해주세요.',
+          '로그인이 안되었거나 토큰이 만료된거 같아요!',
           snackPosition: SnackPosition.BOTTOM,
           backgroundColor: AppColors.mainRedColor,
           colorText: Colors.white,
@@ -67,7 +67,9 @@ class _AppState extends State<App> with SingleTickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    return (Get.find<LoginController>().isLogin) ? const MainPage() : const LoginPage();
+    return (Get.find<LoginController>().loginState.value == LoginState.login)
+        ? const MainPage()
+        : const LoginPage();
   }
 
 }

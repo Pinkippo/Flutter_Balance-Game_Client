@@ -16,5 +16,9 @@ class AuthRepository{
   secession(String token, String password) {
     return MyApiClient().secession(token, password);
   }
-  
+
+  getUserInfo(String token) {
+    return MyApiClient().getUserInfo(token);
+  }
+
 }

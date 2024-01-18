@@ -3,9 +3,17 @@ import 'package:flutter_balance_game_client/common/app_colors.dart';
 import 'package:flutter_balance_game_client/data/model/login_reponse_model.dart';
 import 'package:flutter_balance_game_client/data/model/login_request_model.dart';
 import 'package:flutter_balance_game_client/data/model/register_request_model.dart';
+import 'package:flutter_balance_game_client/data/model/user_response_model.dart';
 import 'package:flutter_balance_game_client/data/repository/auth_repository.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get/get.dart';
+
+/// 로그인 상태 enum
+enum LoginState {
+  login,
+  logout,
+  loginExpired,
+}
 
 /// 로그인 관련 Getx Controller
 class LoginController extends GetxController{
@@ -18,6 +26,12 @@ class LoginController extends GetxController{
 
   /// 로그인 Jwt Token 상태
   final Rx<String> jwtToken = Rx<String>('');
+
+  /// 로그인 이넘 상태
+  final Rx<LoginState> loginState = LoginState.logout.obs;
+
+  /// uid - 유저 번호
+  final RxString uid = RxString('');
 
   /// 사용자 입력 정보
   final RxString userEmail = RxString(''); // 이메일
@@ -48,29 +62,35 @@ class LoginController extends GetxController{
     deepLinkString.value = url;
   }
 
-  /// Controller -> onInit() 완료 후 실행 됨
-  @override
-  void onInit() async {
-
-    /// 로그인 유지 - 토큰 가져오기
-    await getToken();
-    super.onInit();
-  }
 
   /// 로그인 테스트 - 토큰 가져오기
   Future<void> getToken() async {
     jwtToken.value = await storage.read(key: 'jwtToken') ?? '';
-    print('jwtToken: = ${jwtToken.value}');
+
+    /// 유저 정보 가져오기 API 호출 -> 403 == 토큰 만료 로그인 페이지 / 200 == 로그인 상태 유지 + 메인 페이지 + userId 저장
+    if(jwtToken.value == '') {
+      print("토큰 없음 - 로그아웃");
+      loginState.value = LoginState.logout;
+    }else{
+      final UserResponseModel response = await authRepository.getUserInfo(jwtToken.value);
+      if(response.message == LoginState.login){
+        print("토큰 있음 - 로그인");
+        loginState.value = LoginState.login;
+        uid.value = response.userId;
+      } else if(response.message == LoginState.loginExpired){
+        print("토큰 만료 - 로그아웃");
+        // 토큰 초기화
+        await storage.delete(key: 'jwtToken');
+        loginState.value = LoginState.loginExpired;
+      } else {
+        print("토큰 있음 서버 오류 - 로그아웃");
+        // 토큰 초기화
+        await storage.delete(key: 'jwtToken');
+        loginState.value = LoginState.logout;
+      }
+    }
   }
 
-  /// 로그인 테스트 - 로그인 상태 확인
-  bool get isLogin => jwtToken.value != '';
-
-  // /// 로그인 테스트 - 토큰 설정하기
-  // Future<void> setToken() async {
-  //   print("토큰 세팅 --------");
-  //   await storage.write(key: 'jwtToken', value: 'sdfsdfsdfsdf');
-  // }
 
   /// 사용자 입력 정보 업데이트
 
@@ -137,6 +157,12 @@ class LoginController extends GetxController{
       /// 토큰 저장 - 로그인 성공
       jwtToken.value = response.token;
       await storage.write(key: 'jwtToken', value: response.token);
+
+      // 유저 정보 호출 - uid 저장
+      /// TODO : 로그인 API 변경 uid 함께 호출
+      final UserResponseModel userInfo = await authRepository.getUserInfo(response.token);
+      uid.value = userInfo.userId;
+
       return true;
     }else{
       /// 로그인 실패
