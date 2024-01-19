@@ -17,11 +17,11 @@ class LikeDao{
   }
 
   /// 조회 - bool
-  Future<bool> isLike(String boardKey, String jwt, String createTime) async {
+  Future<bool> isLike(String boardKey, String uid, String createTime) async {
 
     final finder = Finder(filter: Filter.and([
       Filter.equals('boardKey', boardKey),
-      Filter.equals('jwt', jwt),
+      Filter.equals('uid', uid),
     ]));
 
     final recordSnapshot = await _likeFolder.findFirst(await _db, finder: finder);
@@ -34,7 +34,7 @@ class LikeDao{
       DateTime timestampDateTime = DateTime.parse(recordSnapshot['timestamp'].toString());
 
       if (timestampDateTime.compareTo(createTimeDateTime) < 0) {
-        await delete(boardKey, jwt).then((value){
+        await delete(boardKey, uid).then((value){
           print("좋아요 데이터 삭제");
         });
         return false;
@@ -47,10 +47,10 @@ class LikeDao{
 
 
   /// 삭제
-  Future delete(String boardKey, String jwt) async {
+  Future delete(String boardKey, String uid) async {
     final finder = Finder(filter: Filter.and([
       Filter.equals('boardKey', boardKey),
-      Filter.equals('jwt', jwt),
+      Filter.equals('uid', uid),
     ]));
     await _likeFolder.delete(await _db, finder: finder);
   }

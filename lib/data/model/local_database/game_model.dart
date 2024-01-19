@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 
 /// 게임 참여 여부 저장을 위한 로컬 스토리지 모델
-/// TODO : jwt를 Uid로 변경해서 사용해야함
 class GameModel {
 
   @override
-  int get hashCode => boardKey.hashCode ^ result.hashCode ^ jwt.hashCode ^ timestamp.hashCode;
+  int get hashCode => boardKey.hashCode ^ result.hashCode ^ uid.hashCode ^ timestamp.hashCode;
 
   @override
   bool operator ==(Object other) =>
@@ -14,20 +13,20 @@ class GameModel {
               runtimeType == other.runtimeType &&
               boardKey == other.boardKey &&
               result == other.result &&
-              jwt == other.jwt &&
+              uid == other.uid &&
               timestamp == other.timestamp;
 
   int? id;
 
   final String boardKey;
   final String result;
-  final String jwt;
+  final String uid;
   final String timestamp;
 
   GameModel( {
     required this.boardKey,
     required this.result,
-    required this.jwt,
+    required this.uid,
     required this.timestamp,
   });
 
@@ -35,7 +34,7 @@ class GameModel {
     return GameModel(
       boardKey: map['boardKey'] as String,
       result: map['result'] as String,
-      jwt: map['jwt'] as String,
+      uid: map['uid'] as String,
       timestamp: map['timestamp'] as String,
     );
   }
@@ -44,7 +43,7 @@ class GameModel {
     return GameModel(
       boardKey: json['boardKey'] as String,
       result: json['result'] as String,
-      jwt: json['jwt'] as String,
+      uid: json['uid'] as String,
       timestamp: json['timestamp'] as String,
     );
   }
@@ -53,7 +52,7 @@ class GameModel {
     return {
       'boardKey': boardKey,
       'result': result,
-      'jwt': jwt,
+      'uid': uid,
       'timestamp': timestamp,
     };
   }

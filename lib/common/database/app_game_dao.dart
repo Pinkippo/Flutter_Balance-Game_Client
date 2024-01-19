@@ -24,10 +24,10 @@ class GameDao{
   }
 
   /// 조회 - bool
-  Future<GameStatus> isAlreadyGame(String boardKey, String jwt, String createTime) async {
+  Future<GameStatus> isAlreadyGame(String boardKey, String uid, String createTime) async {
     final finder = Finder(filter: Filter.and([
       Filter.equals('boardKey', boardKey),
-      Filter.equals('jwt', jwt),
+      Filter.equals('uid', uid),
     ]));
 
     final recordSnapshot = await _gameFolder.findFirst(await _db, finder: finder);
@@ -38,7 +38,7 @@ class GameDao{
       DateTime timestampDateTime = DateTime.parse(recordSnapshot['timestamp'].toString());
 
       if (timestampDateTime.compareTo(createTimeDateTime) < 0) {
-        await delete(boardKey, jwt).then((value){
+        await delete(boardKey, uid).then((value){
           print("게임 데이터 삭제");
         });
         return GameStatus.none;
@@ -60,10 +60,10 @@ class GameDao{
 
 
   /// 삭제
-  Future delete(String boardKey, String jwt) async {
+  Future delete(String boardKey, String uid) async {
     final finder = Finder(filter: Filter.and([
       Filter.equals('boardKey', boardKey),
-      Filter.equals('jwt', jwt),
+      Filter.equals('uid', uid),
     ]));
     await _gameFolder.delete(await _db, finder: finder);
   }
