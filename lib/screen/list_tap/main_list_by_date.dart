@@ -37,7 +37,7 @@ class ListByDate extends GetView<ListController> {
             return NotificationListener<ScrollNotification>(
 
               onNotification: (ScrollNotification scrollInfo) {
-                if (!controller.isLastByDate.value && scrollInfo.metrics.pixels == scrollInfo.metrics.maxScrollExtent) {
+                if (!controller.isLastByDate.value && scrollInfo.metrics.extentAfter <= 250 && !controller.isLoading.value) {
                   controller.addBoardList(0);
                 }
                 return false;

@@ -1,6 +1,8 @@
 import 'dart:async';
 
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_balance_game_client/common/app_colors.dart';
 import 'package:flutter_balance_game_client/data/model/board_response_model.dart';
 import 'package:flutter_balance_game_client/data/repository/board_repository.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -26,7 +28,7 @@ class ListController extends GetxController{
   RxInt pageNumberByHeartOn = 0.obs;
 
   /// 페이지 사이즈
-  RxInt pageSize = 20.obs;
+  RxInt pageSize = 10.obs;
 
   /// 페이지 마지막 여부 - 날짜순
   RxBool isLastByDate = false.obs;
@@ -36,6 +38,9 @@ class ListController extends GetxController{
 
   /// 페이지 마지막 여부 - 좋아요 누른 글
   RxBool isLastByHeartOn = false.obs;
+
+  /// 로딩 여부
+  RxBool isLoading = false.obs;
 
   /// 게시물 리스트 - 날짜순
   RxList<BoardResponseModel> boardListByDate = <BoardResponseModel>[].obs;
@@ -125,39 +130,63 @@ class ListController extends GetxController{
   /// 게시글 리스트 추가 - index : 탭 인덱스
   Future<void> addBoardList(int index) async {
 
-    // 마지막 페이지인 경우 추가하지 않음
-    if(index == 0 && isLastByDate.value) {
-      return;
-    } else if(index == 1 && isLastByHeart.value) {
-      return;
-    } else if(index == 2 && isLastByHeartOn.value) {
-      return;
-    }
+    // 로딩 시작
+    isLoading.value = true;
 
     String? token = await storage.read(key: 'jwtToken');
 
     // 인덱스에 따라 게시물을 불러오고 페이지 번호 증가 및 마지막 페이지 여부 수정
-    if(index == 0) {
+    if(index == 0 && !isLastByDate.value ) {
       List<BoardResponseModel> boardList = await BoardRepository().getMainListByDate(token!, pageNumberByDate.value, pageSize.value);
-      if(boardList.length < pageSize.value) {
+      if(boardList.length < pageSize.value && pageNumberByDate.value != 0) {
+        isLastByDate.value = true;
+        Get.snackbar(
+          '마지막 리스트 입니다',
+          '더 이상 게시물이 없습니다',
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: AppColors.mainPurpleColor,
+          colorText: Colors.white,
+          margin: const EdgeInsets.only(bottom: 70, left: 10, right: 10),
+        );
+      }else if(boardList.length < pageSize.value){
         isLastByDate.value = true;
       }
 
       boardListByDate.addAll(boardList);
       pageNumberByDate.value++;
 
-    } else if(index == 1) {
+    } else if(index == 1 && !isLastByHeart.value) {
       List<BoardResponseModel> boardList = await BoardRepository().getMainListByHeart(token!, pageNumberByHeart.value, pageSize.value);
-      if(boardList.length < pageSize.value) {
+      if(boardList.length < pageSize.value && pageNumberByHeart.value != 0) {
+        isLastByHeart.value = true;
+        Get.snackbar(
+          '마지막 리스트 입니다',
+          '더 이상 게시물이 없습니다',
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: AppColors.mainPurpleColor,
+          colorText: Colors.white,
+          margin: const EdgeInsets.only(bottom: 70, left: 10, right: 10),
+        );
+      }else if(boardList.length < pageSize.value){
         isLastByHeart.value = true;
       }
 
       boardListByHeart.addAll(boardList);
       pageNumberByHeart.value++;
 
-    } else if(index == 2) {
+    } else if(index == 2 && !isLastByHeartOn.value) {
       List<BoardResponseModel> boardList = await BoardRepository().getMainListByHeartOn(token!, pageNumberByHeartOn.value, pageSize.value);
-      if(boardList.length < pageSize.value) {
+      if(boardList.length < pageSize.value && pageNumberByHeartOn.value != 0) {
+        isLastByHeartOn.value = true;
+        Get.snackbar(
+          '마지막 리스트 입니다',
+          '더 이상 게시물이 없습니다',
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: AppColors.mainPurpleColor,
+          colorText: Colors.white,
+          margin: const EdgeInsets.only(bottom: 70, left: 10, right: 10),
+        );
+      }else if(boardList.length < pageSize.value){
         isLastByHeartOn.value = true;
       }
 
@@ -166,6 +195,8 @@ class ListController extends GetxController{
 
     }
 
+    // 로딩 종료
+    isLoading.value = false;
 
   }
 

@@ -32,10 +32,8 @@ class ListByHeart extends GetView<ListController> {
             /// 게시물이 있는 경우
             return NotificationListener<ScrollNotification>(
               onNotification: (ScrollNotification scrollInfo) {
-                if (!controller.isLastByHeart.value &&
-                    scrollInfo.metrics.pixels ==
-                        scrollInfo.metrics.maxScrollExtent) {
-                  controller.addBoardList(0);
+                if (!controller.isLastByHeart.value && scrollInfo.metrics.extentAfter <= 250 && !controller.isLoading.value) {
+                  controller.addBoardList(1);
                 }
                 return false;
               },
