@@ -74,8 +74,8 @@ class MyApiClient {
           jsonDecode(utf8.decode(response.bodyBytes)));
     } else if (response.statusCode != 200) {
       Get.snackbar(
-        '로그인 실패',
-        response.body,
+        '아이디 혹은 비밀번호가 일치하지 않습니다.',
+        '다시 입력해주세요.',
         snackPosition: SnackPosition.BOTTOM,
         backgroundColor: AppColors.mainRedColor,
         colorText: Colors.white,
@@ -83,7 +83,7 @@ class MyApiClient {
       throw Exception('Failed to login');
     } else {
       Get.snackbar(
-        '회원가입 실패',
+        '로그인 실패',
         '서버 상태가 불안정합니다. 잠시 후 다시 시도해주세요.',
         snackPosition: SnackPosition.BOTTOM,
         backgroundColor: AppColors.mainRedColor,

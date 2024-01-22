@@ -14,7 +14,7 @@ class NoMainItemWidget extends GetView<CustomBottomNavgationBarController> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             const Text(
-              "밸런스 게임이 없습니다! \n새로운 게임을 만들어봐요!!",
+              "밸런스 게임이 없습니다! \n 새로운 게임을 만들어봐요!!",
               style: TextStyle(
                 fontSize: 24,
                 color: AppColors.blackColor,
@@ -25,20 +25,27 @@ class NoMainItemWidget extends GetView<CustomBottomNavgationBarController> {
             const SizedBox(
               height: 20,
             ),
-            FloatingActionButton(
-              heroTag: 'createGame',
-              elevation: 10,
-              backgroundColor: Colors.white,
-              shape: ContinuousRectangleBorder(
-                borderRadius: BorderRadius.circular(40),
-              ),
-              onPressed: () {
-                Get.find<CustomBottomNavgationBarController>().changeIndex(0);
+            GestureDetector(
+              onTap: () async {
+                controller.changeIndex(0);
               },
-              child: const Icon(
-                Icons.add,
-                color: AppColors.mainRedColor,
-                size: 40,
+              child: Container(
+                width: 200,
+                height: 50,
+                decoration: BoxDecoration(
+                  color: AppColors.mainRedColor,
+                  borderRadius: BorderRadius.circular(30),
+                ),
+                child: const Center(
+                  child: Text(
+                    "만들기",
+                    style: TextStyle(
+                      fontSize: 20,
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
               ),
             ),
           ],
