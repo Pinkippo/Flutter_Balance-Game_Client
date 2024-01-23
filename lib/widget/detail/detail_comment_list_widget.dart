@@ -17,7 +17,10 @@ class DetailCommentListWidget extends GetView<BoardDetailController> {
         return ListView.builder(
           physics: const NeverScrollableScrollPhysics(),
           shrinkWrap: true,
-          itemCount: controller.boardResponseModel.value.commentList.length,
+          // 기본 5개 출력
+          itemCount: controller.boardResponseModel.value.commentList.length > controller.commentCount.value
+              ? controller.commentCount.value
+              : controller.boardResponseModel.value.commentList.length,
           itemBuilder: (context, index) {
             return Container(
               margin: EdgeInsets.fromLTRB(

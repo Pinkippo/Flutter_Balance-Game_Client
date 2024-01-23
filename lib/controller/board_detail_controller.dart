@@ -19,6 +19,12 @@ class BoardDetailController extends GetxController{
   // 댓글 입력 컨트롤러
   TextEditingController commentContent = TextEditingController();
 
+  // 댓글 갯수 -> 기본 5개
+  RxInt commentCount = 5.obs;
+
+  // 댓글 더보기 여부
+  RxBool isCommentMore = false.obs;
+
   @override
   void onInit() async {
     await getBoardDetail();
@@ -67,6 +73,14 @@ class BoardDetailController extends GetxController{
       Get.back();
     }
 
+    /// 댓글 정보 정렬
+    boardResponseModel.value.commentList.sort((a, b) {
+      return b.commentTime.compareTo(a.commentTime);
+    });
+
+    /// 댓글 갯수 확인
+    checkCommentCount();
+
     /// 좋아요 여부 확인 후 변경
     isLike.value = await LikeDao().isLike( boardKey.toString(), Get.find<LoginController>().uid.value , boardResponseModel.value.boardDate);
     print("좋아요 여부 : ${isLike.value}");
@@ -112,8 +126,16 @@ class BoardDetailController extends GetxController{
 
   /// 댓글 추가
   void addCommentToModel(CommentModel newComment) {
-    boardResponseModel.value.commentList.add(newComment);
+    boardResponseModel.value.commentList.insert(0, newComment);
+    checkCommentCount();
     boardResponseModel.refresh();
+  }
+
+  /// 댓글 갯수 확인 후 더보기 버튼 출력여부 결정
+  void checkCommentCount() {
+    if (boardResponseModel.value.commentList.length > commentCount.value) {
+      isCommentMore.value = true;
+    }
   }
 
   /// 밸런스 게임 참가
@@ -186,6 +208,16 @@ class BoardDetailController extends GetxController{
             );
           }
     });
+  }
+
+  /// 댓글 더보기
+  void loadMoreComments() {
+    commentCount.value += 5;
+    // 더보기 버튼 숨기기
+    if (commentCount.value >= boardResponseModel.value.commentList.length) {
+      isCommentMore.value = false;
+    }
+    boardResponseModel.refresh();
   }
 
 }

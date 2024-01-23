@@ -67,6 +67,8 @@ class LoginController extends GetxController{
   Future<void> getToken() async {
     jwtToken.value = await storage.read(key: 'jwtToken') ?? '';
 
+    print("jwtToken : ${jwtToken.value}");
+
     /// 유저 정보 가져오기 API 호출 -> 403 == 토큰 만료 로그인 페이지 / 200 == 로그인 상태 유지 + 메인 페이지 + userId 저장
     if(jwtToken.value == '') {
       print("토큰 없음 - 로그아웃");

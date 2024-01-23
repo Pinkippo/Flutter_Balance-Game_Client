@@ -165,20 +165,39 @@ class BoardDetailPage extends GetView<BoardDetailController> {
                               ),
                             )
                           // 로딩 완료
-                          : const Column(
+                          : Column(
                               children: [
                                 // 게시글 상세 정보
-                                DetailMainWidget(),
+                                const DetailMainWidget(),
 
-                                SizedBox(
+                                const SizedBox(
                                   height: 40,
                                 ),
 
                                 // 댓글 리스트
-                                DetailCommentListWidget(),
+                                const DetailCommentListWidget(),
+
+                                // 댓글 더보기 버튼 -> true 일때만 출력
+                                controller.isCommentMore.value == true ?
+                                TextButton(
+                                  onPressed: () async {
+                                    controller.loadMoreComments();
+                                  },
+                                  child: const Center(
+                                    child: Text(
+                                      "댓글 더보기",
+                                      style: TextStyle(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.bold,
+                                        color: AppColors.mainRedColor,
+                                      ),
+                                    ),
+                                  ),
+                                ) : const SizedBox.shrink(),
+
 
                                 // 하단 여백 100
-                                SizedBox(
+                                const SizedBox(
                                   height: 100,
                                 ),
                               ],
