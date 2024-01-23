@@ -145,51 +145,50 @@ class BoardDetailPage extends GetView<BoardDetailController> {
           ],
         ),
         body: SafeArea(
-          bottom: false,
           child: Stack(
             children: [
-              /// 게시글 상세 정보 + 댓글 리스트
-              Padding(
-                padding: const EdgeInsets.only(bottom: 75),
-                child: SingleChildScrollView(
-                  physics: const ClampingScrollPhysics(),
-                  child: Obx(
-                    () => Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        /// 로딩 중 TODO : 스켈레톤 UI 적용
-                        (controller.boardResponseModel.value.boardKey == 0)
-                            ? SizedBox(
-                                height: Get.height * 0.9,
-                                child: const Center(
-                                  child: SpinKitThreeBounce(
-                                    color: AppColors.mainRedColor,
-                                  ),
+              // 게시글 상세 정보 + 댓글 리스트
+              SingleChildScrollView(
+                physics: const ClampingScrollPhysics(),
+                child: Obx(
+                  () => Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      // 로딩 중 TODO: 스켈레톤 UI 적용
+                      (controller.boardResponseModel.value.boardKey == 0)
+                          ? SizedBox(
+                              height: Get.height * 0.9,
+                              child: const Center(
+                                child: SpinKitThreeBounce(
+                                  color: AppColors.mainRedColor,
                                 ),
-                              )
-                        /// 로딩 완료
-                            : const Column(
-                                children: [
-
-                                  /// 게시글 상세 정보
-                                  DetailMainWidget(),
-
-                                  SizedBox(
-                                    height: 40,
-                                  ),
-
-                                  /// 댓글 리스트
-                                  DetailCommentListWidget(),
-
-                                ],
                               ),
-                      ],
-                    ),
+                            )
+                          // 로딩 완료
+                          : const Column(
+                              children: [
+                                // 게시글 상세 정보
+                                DetailMainWidget(),
+
+                                SizedBox(
+                                  height: 40,
+                                ),
+
+                                // 댓글 리스트
+                                DetailCommentListWidget(),
+
+                                // 하단 여백 100
+                                SizedBox(
+                                  height: 100,
+                                ),
+                              ],
+                            ),
+                    ],
                   ),
                 ),
               ),
 
-              /// 댓글 작성부 위젯
+              // 댓글 작성부 위젯
               const DetailCommentWriteWidget(),
             ],
           ),

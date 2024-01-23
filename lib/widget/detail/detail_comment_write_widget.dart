@@ -66,10 +66,6 @@ class DetailCommentWriteWidget extends GetView<BoardDetailController> {
             ],
           ),
         ),
-        Container(
-          color: Colors.white,
-          height: 20,
-        ),
       ],
     );
   }
