@@ -29,7 +29,7 @@ class DetailCommentListWidget extends GetView<BoardDetailController> {
                 Get.width * 0.05,
                 0,
               ),
-              padding: const EdgeInsets.all(15),
+              padding: const EdgeInsets.fromLTRB(5, 0, 5, 0),
               decoration: BoxDecoration(
                 color: AppColors.mainPurpleColor.withAlpha(150),
                 borderRadius: BorderRadius.circular(10),
@@ -74,7 +74,7 @@ class DetailCommentListWidget extends GetView<BoardDetailController> {
                       ),
                       const Spacer(),
                       IconButton(
-                          icon: const Icon(Icons.delete, color: AppColors.mainPurpleColor,),
+                          icon: const Icon(Icons.delete, color: Colors.white,),
                           iconSize: 20,
                           onPressed: () async {
                             await controller.deleteComment(index);
@@ -83,15 +83,19 @@ class DetailCommentListWidget extends GetView<BoardDetailController> {
                     ],
                   ),
                   const SizedBox(
-                    height: 10,
+                    height: 5,
                   ),
 
                   /// 댓글 내용
-                  Text(
-                    controller.boardResponseModel.value.commentList[index].commentContent,
-                    style: const TextStyle(
-                      fontSize: 14,
-                      color: Colors.white,
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(10, 0, 10, 10),
+                    child: Text(
+                      controller.boardResponseModel.value.commentList[index].commentContent,
+                      style: const TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 14,
+                        color: Colors.white,
+                      ),
                     ),
                   ),
                 ],

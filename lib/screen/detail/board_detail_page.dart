@@ -54,7 +54,7 @@ class BoardDetailPage extends GetView<BoardDetailController> {
                 Text(
                   "${controller.boardResponseModel.value.userName}의 밸런스 게임",
                   style: const TextStyle(
-                      fontSize: 18,
+                      fontSize: 20,
                       fontWeight: FontWeight.bold,
                       color: AppColors.blackColor
                   ),
@@ -65,7 +65,7 @@ class BoardDetailPage extends GetView<BoardDetailController> {
                       ? convertToFormattedString(controller.boardResponseModel.value.boardDate)
                       : '',
                   style: const TextStyle(
-                      fontSize: 12,
+                      fontSize: 10,
                       color: AppColors.blackColor
                   ),
                 ),
@@ -75,7 +75,7 @@ class BoardDetailPage extends GetView<BoardDetailController> {
           centerTitle: true,
           actions: [
             Stack(
-              alignment: Alignment.center,
+              alignment: Alignment.topCenter,
               children: [
                 /// 좋아요 버튼
                 IconButton(
@@ -102,6 +102,7 @@ class BoardDetailPage extends GetView<BoardDetailController> {
                       style: const TextStyle(
                         fontSize: 10,
                         color: AppColors.blackColor,
+                        fontWeight: FontWeight.bold,
                       ),
                     ),
                   ),
@@ -110,7 +111,7 @@ class BoardDetailPage extends GetView<BoardDetailController> {
             ),
             /// 공유하기 버튼
             Stack(
-              alignment: Alignment.center,
+              alignment: Alignment.topCenter,
               children: [
                 IconButton(
                   onPressed: () async {
@@ -137,6 +138,7 @@ class BoardDetailPage extends GetView<BoardDetailController> {
                       style: TextStyle(
                         fontSize: 10,
                         color: AppColors.blackColor,
+                        fontWeight: FontWeight.bold,
                       ),
                   ),
                 ),

@@ -20,20 +20,13 @@ class ShareModel {
 /// 카카오 공유하기
 class KakaoShareManager {
 
-  /// 카카오톡 설치 유무
-  Future<bool> isKakaotalkInstalled() async {
-    bool isKakaoTalkSharingAvailable = await ShareClient.instance.isKakaoTalkSharingAvailable();
-    return isKakaoTalkSharingAvailable;
-  }
-
   /// 카카오톡 공유하기
   void shareMyCode(ShareModel shareModel) async {
 
-    bool isKakaoTalkSharingAvailable = await ShareClient.instance.isKakaoTalkSharingAvailable();
-
-    // 카카오톡 공유하기 탬플릿 생성
+    // 카카오톡 설치 여부 확인
+    bool isKakaoTalkSharingAvailable = await isKakaoTalkInstalled();
+    // 탬플릿 생성
     var template =  _getTemplateV2(shareModel);
-
     // 설치 여부에 따른 로직 분기
     if (isKakaoTalkSharingAvailable) {
       Uri uri = await ShareClient.instance.shareDefault(template: template);
@@ -56,7 +49,7 @@ class KakaoShareManager {
     final FeedTemplate template = FeedTemplate(
       content: Content(
         title: title,
-        description: "양자택일의 밸런스게임을 참여해봐!!!",
+        description: "양자택일을 통해 친구와 나의 의견을 확인해보세요!",
         imageUrl: Uri.parse("https://k.kakaocdn.net/14/dn/btsDCNVOr8S/s1lQ3XekZo5TLImV09v1Vk/o.jpg"),
         link: Link(
             mobileWebUrl: Uri.parse(url)),

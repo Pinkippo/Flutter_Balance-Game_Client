@@ -12,12 +12,18 @@ class DetailCommentWriteWidget extends GetView<BoardDetailController> {
       mainAxisAlignment: MainAxisAlignment.end,
       children: [
         Container(
-          padding: const EdgeInsets.symmetric(
-              horizontal: 10, vertical: 10),
+          padding: EdgeInsets.fromLTRB(
+            Get.width * 0.03,
+            5,
+            Get.width * 0.03,
+            5,
+          ),
           width: MediaQuery.of(context).size.width,
-          height: 75,
+          height: 55,
           color: AppColors.backgroundColor,
           child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.end,
             children: [
               Expanded(
                 child: Container(
@@ -40,6 +46,15 @@ class DetailCommentWriteWidget extends GetView<BoardDetailController> {
                           color: Colors.black54, fontSize: 13),
                       border: InputBorder.none,
                     ),
+                      onChanged: (text) {
+                        /// 댓글 작성 글자 수 제한
+                        if (text.length > 50) {
+                          controller.commentContent.text = text.substring(0, 50);
+                          controller.commentContent.selection = TextSelection.fromPosition(
+                            const TextPosition(offset: 50),
+                          );
+                        }
+                      },
                   ),
                 ),
               ),
