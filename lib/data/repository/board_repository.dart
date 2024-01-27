@@ -64,4 +64,9 @@ class BoardRepository{
     return MyApiClient().addGame(token, boardKey, result);
   }
 
+  /// 게시물 신고
+  Future<bool> reportBoard(String token, int boardKey, String reason) async {
+    return MyApiClient().reportBoard(token, boardKey, reason);
+  }
+
 }

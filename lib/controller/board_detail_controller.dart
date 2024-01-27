@@ -25,6 +25,30 @@ class BoardDetailController extends GetxController{
   // 댓글 더보기 여부
   RxBool isCommentMore = false.obs;
 
+  // 신고하기 폭력 여부
+  RxBool isViolence = false.obs;
+
+  // 신고하기 선정적 여부
+  RxBool isSexual = false.obs;
+
+  // 신고하기 광고 여부
+  RxBool isAd = false.obs;
+
+  // 신고하기 폭력 변경
+  void changeViolence(){
+    isViolence.value = !isViolence.value;
+  }
+
+  // 신고하기 선정적 변경
+  void changeSexual(){
+    isSexual.value = !isSexual.value;
+  }
+
+  // 신고하기 광고 변경
+  void changeAd(){
+    isAd.value = !isAd.value;
+  }
+
   @override
   void onInit() async {
     await getBoardDetail();
@@ -218,6 +242,59 @@ class BoardDetailController extends GetxController{
       isCommentMore.value = false;
     }
     boardResponseModel.refresh();
+  }
+
+  /// 게시물 신고하기
+  Future<void> reportGame() async {
+
+    String? token = await storage.read(key: 'jwtToken');
+
+    String reportReason = "";
+
+    if(!isViolence.value && !isSexual.value && !isAd.value){
+      Get.snackbar(
+          "신고 실패",
+          "신고 사유를 선택해주세요",
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: AppColors.mainRedColor,
+          colorText: Colors.white,
+          margin: const EdgeInsets.only(bottom: 60, left: 10, right: 10),
+          duration: const Duration(seconds: 1)
+      );
+      return;
+    }
+
+    if(isViolence.value){
+      reportReason += "[폭력적]";
+    }
+    if(isSexual.value){
+      reportReason += "[선정적]";
+    }
+    if(isAd.value){
+      reportReason += "[광고]";
+    }
+
+    await BoardRepository().reportBoard(
+      token!,
+      boardResponseModel.value.boardKey,
+      reportReason
+    ).then((value){
+      if(value){
+        Get.snackbar(
+            "신고 성공",
+            "게시물 신고를 완료했습니다",
+            snackPosition: SnackPosition.BOTTOM,
+            backgroundColor: AppColors.mainOrangeColor,
+            colorText: Colors.white,
+            margin: const EdgeInsets.only(bottom: 60, left: 10, right: 10),
+            duration: const Duration(seconds: 1)
+        );
+      }
+    });
+
+    isViolence.value = false;
+    isSexual.value = false;
+    isAd.value = false;
   }
 
 }

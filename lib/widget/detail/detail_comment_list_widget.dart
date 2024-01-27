@@ -74,11 +74,20 @@ class DetailCommentListWidget extends GetView<BoardDetailController> {
                         const Spacer(),
                         IconButton(
                             icon: const Icon(Icons.delete, color: Colors.white,),
-                            iconSize: 16,
+                            iconSize: 20,
                             onPressed: () async {
                               await controller.deleteComment(index);
                             },
-                        )
+                        ),
+                        // 신고하기
+                        IconButton(
+                          icon: const Icon(Icons.report_problem_outlined, color: Colors.white,),
+                          iconSize: 20,
+                          onPressed: () async {
+
+                          },
+                          splashColor: Colors.transparent,
+                        ),
                       ],
                     ),
                   ),

@@ -96,51 +96,16 @@ class BoardDetailPage extends GetView<BoardDetailController> {
                   ),
                 ),
                 Positioned(
-                  bottom: 0,
+                  bottom: 2,
                   child: Obx(
                     () => Text(
                       controller.boardResponseModel.value.heartCount.toString(),
                       style: const TextStyle(
-                        fontSize: 10,
+                        fontSize: 12,
                         color: AppColors.blackColor,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                  ),
-                ),
-              ],
-            ),
-            /// 공유하기 버튼
-            Stack(
-              alignment: Alignment.topCenter,
-              children: [
-                IconButton(
-                  onPressed: () async {
-                    KakaoShareManager().shareMyCode(
-                      ShareModel(
-                        title: controller.boardResponseModel.value.boardTitle,
-                        url: "yangjataekil://detail?boardKey=${controller.boardResponseModel.value.boardKey}",
-                        likeCount: controller.boardResponseModel.value.heartCount.toString(),
-                        commentCount: controller.boardResponseModel.value.commentList.length.toString(),
-                        boardKey: controller.boardResponseModel.value.boardKey.toString(),
-                      ),
-                    );
-                  },
-                  icon: const Icon(
-                    Icons.share,
-                    size: 30,
-                    color: AppColors.mainRedColor,
-                  ),
-                ),
-                  const Positioned(
-                  bottom: 0,
-                  child: Text(
-                      "공유하기",
-                      style: TextStyle(
-                        fontSize: 10,
-                        color: AppColors.blackColor,
-                        fontWeight: FontWeight.bold,
-                      ),
                   ),
                 ),
               ],
@@ -178,6 +143,10 @@ class BoardDetailPage extends GetView<BoardDetailController> {
                                 ),
 
                                 const DetailDivisionWidget(),
+
+                                const SizedBox(
+                                  height: 10,
+                                ),
 
                                 // 댓글 리스트
                                 const DetailCommentListWidget(),
