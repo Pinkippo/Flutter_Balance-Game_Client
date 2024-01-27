@@ -47,40 +47,40 @@ class DetailCommentListWidget extends GetView<BoardDetailController> {
                 children: [
 
                   /// 댓글 작성자 정보
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      const SizedBox(
-                        width: 10,
-                      ),
-                      const Text(
-                        "익명",
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white,
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        const Text(
+                          "익명의 사용자",
+                          style: TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white,
+                          ),
                         ),
-                      ),
-                      const SizedBox(
-                        width: 10,
-                      ),
-                      Text(
-                        convertToFormattedString(controller.boardResponseModel.value.commentList[index].commentTime),
-                        style: const TextStyle(
-                          fontSize: 12,
-                          color: Colors.white,
+                        const SizedBox(
+                          width: 10,
                         ),
-                      ),
-                      const Spacer(),
-                      IconButton(
-                          icon: const Icon(Icons.delete, color: Colors.white,),
-                          iconSize: 20,
-                          onPressed: () async {
-                            await controller.deleteComment(index);
-                          },
-                      )
-                    ],
+                        Text(
+                          convertToFormattedString(controller.boardResponseModel.value.commentList[index].commentTime),
+                          style: const TextStyle(
+                            fontSize: 12,
+                            color: Colors.white,
+                          ),
+                        ),
+                        const Spacer(),
+                        IconButton(
+                            icon: const Icon(Icons.delete, color: Colors.white,),
+                            iconSize: 16,
+                            onPressed: () async {
+                              await controller.deleteComment(index);
+                            },
+                        )
+                      ],
+                    ),
                   ),
                   const SizedBox(
                     height: 5,

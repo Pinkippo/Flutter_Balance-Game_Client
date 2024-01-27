@@ -4,6 +4,7 @@ import 'package:flutter_balance_game_client/common/share/kakao_share_manager.dar
 import 'package:flutter_balance_game_client/controller/board_detail_controller.dart';
 import 'package:flutter_balance_game_client/widget/detail/detail_comment_list_widget.dart';
 import 'package:flutter_balance_game_client/widget/detail/detail_comment_write_widget.dart';
+import 'package:flutter_balance_game_client/widget/detail/detail_division_widget.dart';
 import 'package:flutter_balance_game_client/widget/detail/detail_main_widget.dart';
 import 'package:flutter_balance_game_client/widget/mypage/mypage_title_widget.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -173,8 +174,10 @@ class BoardDetailPage extends GetView<BoardDetailController> {
                                 const DetailMainWidget(),
 
                                 const SizedBox(
-                                  height: 40,
+                                  height: 30,
                                 ),
+
+                                const DetailDivisionWidget(),
 
                                 // 댓글 리스트
                                 const DetailCommentListWidget(),
