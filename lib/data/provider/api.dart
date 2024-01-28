@@ -568,7 +568,7 @@ class MyApiClient {
   }
 
   /// 게시물 신고
-  Future<bool> reportBoard(String token, int boardKey, String content) async {
+  Future<bool> reportBoard(String token, int boardKey, String reason) async {
     final url = Uri.parse('$baseUrl/board/report');
 
     final response = await http.post(
@@ -580,8 +580,36 @@ class MyApiClient {
       },
       body: jsonEncode({
         'boardKey': boardKey,
-        'reportTitle' : '신고합니다',
-        'reportContent': content,
+        'reportTitle' : '게시물 신고합니다',
+        'reportContent': reason,
+      }),
+    );
+
+    print(response.statusCode);
+    print(response.body);
+
+    if (response.statusCode == 200) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  /// 댓글 신고
+  Future<bool> reportComment(String token, int commentKey, String reason) async {
+    final url = Uri.parse('$baseUrl/comment/report');
+
+    final response = await http.post(
+      url,
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'Authorization': 'Bearer $token',
+      },
+      body: jsonEncode({
+        'commentKey': commentKey,
+        'reportTitle' : '댓글 신고합니다',
+        'reportContent': reason,
       }),
     );
 

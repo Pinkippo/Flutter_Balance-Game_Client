@@ -245,7 +245,7 @@ class BoardDetailController extends GetxController{
   }
 
   /// 게시물 신고하기
-  Future<void> reportGame() async {
+  Future<void> reportGameOrComment(int commentKey) async {
 
     String? token = await storage.read(key: 'jwtToken');
 
@@ -274,24 +274,43 @@ class BoardDetailController extends GetxController{
       reportReason += "[광고]";
     }
 
-    await BoardRepository().reportBoard(
-      token!,
-      boardResponseModel.value.boardKey,
-      reportReason
-    ).then((value){
-      if(value){
-        Get.snackbar(
-            "신고 성공",
-            "게시물 신고를 완료했습니다",
-            snackPosition: SnackPosition.BOTTOM,
-            backgroundColor: AppColors.mainOrangeColor,
-            colorText: Colors.white,
-            margin: const EdgeInsets.only(bottom: 60, left: 10, right: 10),
-            duration: const Duration(seconds: 1)
-        );
-      }
-    });
-
+    if(commentKey.isEqual(0)){
+      await BoardRepository().reportBoard(
+          token!,
+          boardResponseModel.value.boardKey,
+          reportReason
+      ).then((value){
+        if(value){
+          Get.snackbar(
+              "신고 성공",
+              "게시물 신고를 완료했습니다",
+              snackPosition: SnackPosition.BOTTOM,
+              backgroundColor: AppColors.mainOrangeColor,
+              colorText: Colors.white,
+              margin: const EdgeInsets.only(bottom: 60, left: 10, right: 10),
+              duration: const Duration(seconds: 1)
+          );
+        }
+      });
+    }else{
+      await BoardRepository().reportComment(
+          token!,
+          commentKey,
+          reportReason
+      ).then((value){
+        if(value){
+          Get.snackbar(
+              "신고 성공",
+              "댓글 신고를 완료했습니다",
+              snackPosition: SnackPosition.BOTTOM,
+              backgroundColor: AppColors.mainOrangeColor,
+              colorText: Colors.white,
+              margin: const EdgeInsets.only(bottom: 60, left: 10, right: 10),
+              duration: const Duration(seconds: 1)
+          );
+        }
+      });
+    }
     isViolence.value = false;
     isSexual.value = false;
     isAd.value = false;

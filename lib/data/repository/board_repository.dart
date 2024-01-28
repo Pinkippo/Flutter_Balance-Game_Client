@@ -69,4 +69,9 @@ class BoardRepository{
     return MyApiClient().reportBoard(token, boardKey, reason);
   }
 
+  /// 댓글 신고
+  Future<bool> reportComment(String token, int commentKey, String reason) async {
+    return MyApiClient().reportComment(token, commentKey, reason);
+  }
+
 }

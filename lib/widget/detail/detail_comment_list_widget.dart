@@ -5,6 +5,8 @@ import 'package:flutter_balance_game_client/data/model/comment_response_model.da
 import 'package:get/get.dart';
 import 'package:flutter_balance_game_client/controller/board_detail_controller.dart';
 
+import '../report/report_dialog_widget.dart';
+
 /// 게시글 상세 페이지 - 댓글 리스트 위젯
 class DetailCommentListWidget extends GetView<BoardDetailController> {
   const DetailCommentListWidget({Key? key}) : super(key: key);
@@ -84,7 +86,9 @@ class DetailCommentListWidget extends GetView<BoardDetailController> {
                           icon: const Icon(Icons.report_problem_outlined, color: Colors.white,),
                           iconSize: 20,
                           onPressed: () async {
-
+                            Get.dialog(
+                              ReportDialogWidget(commentKey: controller.boardResponseModel.value.commentList[index].commentKey),
+                            );
                           },
                           splashColor: Colors.transparent,
                         ),

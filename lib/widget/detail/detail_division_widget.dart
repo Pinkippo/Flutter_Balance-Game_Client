@@ -71,7 +71,7 @@ class DetailDivisionWidget extends GetView<BoardDetailController> {
                 IconButton(
                   onPressed: () async {
                     Get.dialog(
-                      const ReportDialogWidget()
+                      const ReportDialogWidget(commentKey: 0),
                     );
                   },
                   icon: const Icon(
