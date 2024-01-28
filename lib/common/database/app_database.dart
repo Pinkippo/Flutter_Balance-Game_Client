@@ -13,6 +13,7 @@ class AppDatabase {
 
   Completer<Database>? _gameDbOpenCompleter;
   Completer<Database>? _likeDbOpenCompleter;
+  Completer<Database>? _reportDbOpenCompleter;
 
   AppDatabase._();
 
@@ -47,4 +48,21 @@ class AppDatabase {
     final alarmDatabase = await databaseFactoryIo.openDatabase(alarmDbPath);
     _likeDbOpenCompleter!.complete(alarmDatabase);
   }
+
+  Future<Database> get reportDatabase async {
+    if (_reportDbOpenCompleter == null) {
+      _reportDbOpenCompleter = Completer();
+      await _openReportDatabase();
+    }
+    return _reportDbOpenCompleter!.future;
+  }
+
+  Future _openReportDatabase() async {
+    final appDocumentDir = await getApplicationDocumentsDirectory();
+    final alarmDbPath = join(appDocumentDir.path, 'report.db');
+
+    final alarmDatabase = await databaseFactoryIo.openDatabase(alarmDbPath);
+    _reportDbOpenCompleter!.complete(alarmDatabase);
+  }
+
 }

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-/// 좋아요 여부 저장을 위한 로컬 스토리지 모델
+/// 좋아요 여부 저장을 위한 로컬 데이터베이스 모델
 class LikeModel {
 
   @override

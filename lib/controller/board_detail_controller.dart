@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_balance_game_client/common/app_colors.dart';
 import 'package:flutter_balance_game_client/common/database/app_game_dao.dart';
 import 'package:flutter_balance_game_client/common/database/app_like_dao.dart';
+import 'package:flutter_balance_game_client/common/database/app_report_dao.dart';
 import 'package:flutter_balance_game_client/controller/login_controller.dart';
 import 'package:flutter_balance_game_client/data/model/board_response_model.dart';
 import 'package:flutter_balance_game_client/data/model/comment_response_model.dart';
@@ -244,6 +245,7 @@ class BoardDetailController extends GetxController{
     boardResponseModel.refresh();
   }
 
+
   /// 게시물 신고하기
   Future<void> reportGameOrComment(int commentKey) async {
 
@@ -260,6 +262,20 @@ class BoardDetailController extends GetxController{
           colorText: Colors.white,
           margin: const EdgeInsets.only(bottom: 60, left: 10, right: 10),
           duration: const Duration(seconds: 1)
+      );
+      return;
+    }
+
+    // 만약 신고 데이터가 이미 존재한다면
+    if(await ReportDao().isAlreadyReport(boardResponseModel.value.boardKey.toString(), commentKey.toString(), Get.find<LoginController>().uid.value)){
+      Get.snackbar(
+            "신고 실패",
+            "이미 신고가 접수되었습니다.",
+            snackPosition: SnackPosition.BOTTOM,
+            backgroundColor: AppColors.mainRedColor,
+            colorText: Colors.white,
+            margin: const EdgeInsets.only(bottom: 60, left: 10, right: 10),
+            duration: const Duration(seconds: 1)
       );
       return;
     }
@@ -290,6 +306,14 @@ class BoardDetailController extends GetxController{
               margin: const EdgeInsets.only(bottom: 60, left: 10, right: 10),
               duration: const Duration(seconds: 1)
           );
+
+          // 게시물 신고 성공 시 로컬 데이터베이스 저장
+          ReportDao().insert(
+              boardResponseModel.value.boardKey.toString(),
+              commentKey.toString(),
+              Get.find<LoginController>().uid.value,
+              DateTime.now().toString(),
+              );
         }
       });
     }else{
@@ -308,6 +332,14 @@ class BoardDetailController extends GetxController{
               margin: const EdgeInsets.only(bottom: 60, left: 10, right: 10),
               duration: const Duration(seconds: 1)
           );
+
+          // 댓글 신고 성공 시 로컬 데이터베이스 저장
+          ReportDao().insert(
+              boardResponseModel.value.boardKey.toString(),
+              commentKey.toString(),
+              Get.find<LoginController>().uid.value,
+              DateTime.now().toString(),
+              );
         }
       });
     }
