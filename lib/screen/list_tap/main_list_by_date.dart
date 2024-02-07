@@ -52,7 +52,7 @@ class ListByDate extends GetView<ListController> {
                     },
                     child: Card(
                       elevation: 10,
-                      margin: const EdgeInsets.fromLTRB(0, 0, 0, 20),
+                      margin: const EdgeInsets.fromLTRB(10, 10, 10, 10),
                       color: AppColors.cardColor,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(20),
@@ -74,10 +74,11 @@ class ListByDate extends GetView<ListController> {
                                   width: 10,
                                 ),
                                 const CircleAvatar(
-                                  backgroundColor: AppColors.mainOrangeColor,
+                                  backgroundColor: AppColors.shadowColor,
+                                  radius: 20,
                                   child: Icon(
                                     Icons.person,
-                                    color: Colors.black,
+                                    color: AppColors.mainRedColor,
                                     size: 30,
                                   ),
                                 ),
@@ -108,30 +109,14 @@ class ListByDate extends GetView<ListController> {
 
                                 const Spacer(),
 
-                                SizedBox(
-                                  height: 50,
-                                  child: Stack(
-                                    alignment: Alignment.center,
-                                    children: [
-                                      const Icon(
-                                        Icons.favorite,
-                                        color: AppColors.mainRedColor,
-                                        size: 30,
-                                      ),
-                                      Positioned(
-                                        bottom: 0,
-                                        child: Obx(
-                                              () => Text(
-                                            controller.boardListByDate[index].heartCount.toString(),
-                                            style: const TextStyle(
-                                              fontSize: 12,
-                                              color: AppColors.blackColor,
-                                              fontWeight: FontWeight.bold,
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                    ],
+                                Obx(
+                                      () => Text(
+                                    "❤️${controller.boardListByDate[index].heartCount}",
+                                    style: const TextStyle(
+                                      fontSize: 15,
+                                      color: AppColors.blackColor,
+                                      fontWeight: FontWeight.bold,
+                                    ),
                                   ),
                                 ),
 
@@ -177,7 +162,7 @@ class ListByDate extends GetView<ListController> {
                                     child: Padding(
                                       padding: const EdgeInsets.fromLTRB(8, 0, 8, 0),
                                       child: Card(
-                                        color: AppColors.mainOrangeColor,
+                                        color: AppColors.shadowColor,
                                         shape: RoundedRectangleBorder(
                                           borderRadius: BorderRadius.circular(15),
                                         ),
@@ -202,7 +187,7 @@ class ListByDate extends GetView<ListController> {
                                     child: Padding(
                                       padding: const EdgeInsets.fromLTRB(8, 0, 8, 0),
                                       child: Card(
-                                        color: AppColors.mainOrangeColor,
+                                        color: AppColors.shadowColor,
                                         shape: RoundedRectangleBorder(
                                           borderRadius: BorderRadius.circular(15),
                                         ),

@@ -14,7 +14,7 @@ class CustomBottomNavgationBar extends GetView<CustomBottomNavgationBarControlle
           currentIndex: controller.selectedIndex.value,
           onTap: controller.changeIndex,
           selectedItemColor: AppColors.mainRedColor,
-          unselectedItemColor: AppColors.mainPurpleColor,
+          unselectedItemColor: AppColors.mainOrangeColor,
           unselectedLabelStyle: const TextStyle(fontSize: 12),
           selectedLabelStyle: const TextStyle(fontSize: 14),
           type: BottomNavigationBarType.fixed,
