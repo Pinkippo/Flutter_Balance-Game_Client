@@ -45,6 +45,9 @@ dependencies:
   flutter_animate: ^4.2.0+1
   animations: ^2.0.7
 
+  #banner slider
+  carousel_slider: ^4.2.1
+
   #storage
   shared_preferences: ^2.0.15
   flutter_secure_storage:
@@ -94,6 +97,7 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - assets/images/
+    - assets/images/banner/
     - assets/config/.env
 
   # An image asset can refer to one or more resolution-specific "variants", see

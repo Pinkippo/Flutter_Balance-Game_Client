@@ -27,12 +27,13 @@ class ListByTabHeader extends StatelessWidget {
               child: Obx(() => Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const Text("최신순", style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: AppColors.blackColor)),
+                  Text("최신순", style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold,
+                      color: controller.selectedIndex.value == 0 ? AppColors.mainRedColor : Colors.grey[500])),
                   const SizedBox(height: 5),
                   Container(
                     height: 3,
                     width: Get.width * 0.2,
-                    color: controller.selectedIndex.value == 0 ? AppColors.blackColor : Colors.transparent,
+                    color: controller.selectedIndex.value == 0 ? AppColors.mainRedColor : Colors.transparent,
                   ),
                 ],
               )),
@@ -47,12 +48,13 @@ class ListByTabHeader extends StatelessWidget {
               child: Obx(() => Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const Text("인기순", style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: AppColors.blackColor)),
+                  Text("인기순", style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold,
+                      color: controller.selectedIndex.value == 1 ? AppColors.mainRedColor : Colors.grey[500])),
                   const SizedBox(height: 3),
                   Container(
-                    height: 5,
+                    height: 3,
                     width: Get.width * 0.2,
-                    color: controller.selectedIndex.value == 1 ? AppColors.blackColor : Colors.transparent,
+                    color: controller.selectedIndex.value == 1 ? AppColors.mainRedColor : Colors.transparent,
                   ),
                 ],
               )),
@@ -67,12 +69,13 @@ class ListByTabHeader extends StatelessWidget {
               child: Obx(() => Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const Text("좋아요", style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: AppColors.blackColor)),
+                  Text("좋아요", style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold,
+                      color: controller.selectedIndex.value == 2 ? AppColors.mainRedColor : Colors.grey[500])),
                   const SizedBox(height: 3),
                   Container(
-                    height: 5,
+                    height: 3,
                     width: Get.width * 0.2,
-                    color: controller.selectedIndex.value == 2 ? AppColors.blackColor : Colors.transparent,
+                    color: controller.selectedIndex.value == 2 ? AppColors.mainRedColor : Colors.transparent,
                   ),
                 ],
               )),

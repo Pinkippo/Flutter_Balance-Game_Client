@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_balance_game_client/common/banner/banner_item.dart';
 import 'package:flutter_balance_game_client/controller/list_controller.dart';
+import 'package:flutter_balance_game_client/widget/banner/banner_item_widget.dart';
+import 'package:flutter_balance_game_client/widget/banner/banner_slide_widget.dart';
 import 'package:flutter_balance_game_client/widget/main_list_by/list_by_tab_header_widget.dart';
 import 'package:get/get.dart';
 
@@ -27,8 +30,15 @@ class MainListTap extends GetView<ListByController> {
 
     return Column(
       children: [
+
+        /// 이미지 배너
+        Obx(() => TopBannerSlider(
+            sliderItemList: _getBannerWidget(), onChanged: controller.onBannerChanged)),
+        const SizedBox(height: 20),
+
         /// 탭 바 - 바텀 네비게이션 바와 동일한 방식으로 구현
         ListByTabHeader(controller: controller),
+
         /// 탭 바 내부 글 목록
         Expanded(
           child: Obx(() => IndexedStack(
@@ -39,4 +49,17 @@ class MainListTap extends GetView<ListByController> {
       ],
     );
   }
+
+  /// 배너 리스트
+  List<Widget>? _getBannerWidget() {
+    final bannerList = BannerItem().tempBannerList;
+    final bannerTotalCount = bannerList.length;
+    return bannerList.map((bannerItem) {
+      return BannerCard(
+          bannerIndex: controller.bannerCurrentIndex.value,
+          bannerTotalCount: bannerTotalCount,
+          bannerDTO: bannerItem);
+    }).toList();
+  }
+
 }
