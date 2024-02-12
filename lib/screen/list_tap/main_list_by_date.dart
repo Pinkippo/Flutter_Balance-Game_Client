@@ -201,7 +201,6 @@ class ListByDate extends GetView<ListController> {
                           const SizedBox(
                             height: 10,
                           ),
-
                         ],
                       ),
                     ),
