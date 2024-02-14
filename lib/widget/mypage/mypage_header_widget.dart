@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_balance_game_client/common/app_colors.dart';
+import 'package:flutter_balance_game_client/controller/login_controller.dart';
+import 'package:get/get.dart';
 
 /// 마이페이지 탭 상단 위젯
-class MyPageHeader extends StatelessWidget {
+class MyPageHeader extends GetView<LoginController> {
   const MyPageHeader({super.key});
 
   @override

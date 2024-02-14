@@ -33,16 +33,15 @@ class LoginController extends GetxController{
   /// uid - 유저 번호
   final RxString uid = RxString('');
 
-  /// 사용자 입력 정보
+  /// 사용자 입력 정보 + 로그인 정보
   final RxString userEmail = RxString(''); // 이메일
+  final RxString userName = RxString(''); // 이름
 
   final RxString userPw = RxString(''); // 비밀번호
 
   final RxString userPwCheck = RxString(''); // 비밀번호 확인
 
   final RxString userId = RxString(''); // 아이디
-
-  final RxString userName = RxString(''); // 이름
 
   /// 사용자 로그인 입력 정보
   final RxString loginUserId = RxString(''); // 아이디
@@ -78,7 +77,11 @@ class LoginController extends GetxController{
       if(response.message == LoginState.login){
         print("토큰 있음 - 로그인");
         loginState.value = LoginState.login;
+        // 유저 정보 저장
         uid.value = response.userId;
+        userName.value = response.userName;
+        userEmail.value = response.userEmail;
+
       } else if(response.message == LoginState.loginExpired){
         print("토큰 만료 - 로그아웃");
         // 토큰 초기화
@@ -160,10 +163,13 @@ class LoginController extends GetxController{
       jwtToken.value = response.token;
       await storage.write(key: 'jwtToken', value: response.token);
 
-      // 유저 정보 호출 - uid 저장
-      /// TODO : 로그인 API 변경 uid 함께 호출
+      // 유저 정보 호출
       final UserResponseModel userInfo = await authRepository.getUserInfo(response.token);
+
+      // 유저 정보 저장
       uid.value = userInfo.userId;
+      userName.value = userInfo.userName;
+      userEmail.value = userInfo.userEmail;
 
       return true;
     }else{

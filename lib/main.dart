@@ -56,7 +56,6 @@ Future<void> initService() async {
     return LoginController(authRepository: AuthRepository());
     }, permanent: true).then((value) async {
      await value.getToken();
-     print("로그인 여부 : $value.isLogin");
   });
   
 }
