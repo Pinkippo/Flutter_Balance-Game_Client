@@ -16,19 +16,23 @@ class MyPageListItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListTile(
-      leading: Icon(
-        icon,
-        color: AppColors.mainRedColor,
-      ),
-      title: Text(
-        title,
-        style: const TextStyle(
-          color: AppColors.blackColor,
-          fontSize: 20,
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(0, 5, 0, 5),
+      child: ListTile(
+        leading: Icon(
+          icon,
+          color: Colors.redAccent,
         ),
+        title: Text(
+          title,
+          style: const TextStyle(
+            color: AppColors.blackColor,
+            fontSize: 20,
+            fontWeight: FontWeight.w500,
+          ),
+        ),
+        onTap: onTap,
       ),
-      onTap: onTap,
     );
   }
 }

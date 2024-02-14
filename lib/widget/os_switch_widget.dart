@@ -18,7 +18,17 @@ class OsSwitch extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Platform.isIOS
-        ? CupertinoSwitch(value: value, onChanged: onChanged , activeColor: AppColors.mainPurpleColor,)
-        : Switch(value: value, onChanged: onChanged , activeColor: AppColors.mainPurpleColor,);
+        ? CupertinoSwitch(
+            value: value,
+            onChanged: onChanged,
+            activeColor: AppColors.mainRedColor,
+            trackColor: AppColors.mainRedColor.withOpacity(0.25),
+          )
+        : Switch(
+            value: value,
+            onChanged: onChanged,
+            activeColor: AppColors.mainRedColor,
+            activeTrackColor: AppColors.mainRedColor.withOpacity(0.25),
+          );
   }
 }

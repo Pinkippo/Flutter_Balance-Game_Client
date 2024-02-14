@@ -12,19 +12,23 @@ class MyPageSwitchmenu extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListTile(
-      leading: const Icon(
-        Icons.notifications,
-        color: AppColors.mainRedColor,
-      ),
-      title: Text(
-        title,
-        style: const TextStyle(
-          color: AppColors.blackColor,
-          fontSize: 20,
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(0, 5, 0, 5),
+      child: ListTile(
+        leading: const Icon(
+          Icons.notifications,
+          color: Colors.redAccent,
         ),
+        title: Text(
+          title,
+          style: const TextStyle(
+            color: AppColors.blackColor,
+            fontSize: 20,
+            fontWeight: FontWeight.w500,
+          ),
+        ),
+        trailing: OsSwitch(value: isOn, onChanged: onChanged,),
       ),
-      trailing: OsSwitch(value: isOn, onChanged: onChanged,),
     );
   }
 }

@@ -26,18 +26,17 @@ class MainMypageTap extends GetView<LoginController> {
           /// 마이페이지 상단 탭
           const MyPageHeader(),
           const SizedBox(
-            height: 20,
+            height: 30,
           ),
           /// 마이페이지 하단 탭
           const MyPageTitleWidget(title: '계정'),
-          /// 정보 변경
-          MyPageListItem(
-            icon: Icons.person,
-            title: '정보 변경',
-            onTap: () {
-              // TODO: 정보변경 페이지 이동 후 구현
-            },
-          ),
+          /// 정보 변경 TODO : 마이페이지 헤더 내부로 이동
+          // MyPageListItem(
+          //   icon: Icons.person,
+          //   title: '정보 변경',
+          //   onTap: () {
+          //   },
+          // ),
           /// 비밀번호 변경
           MyPageListItem(
             icon: Icons.lock,
