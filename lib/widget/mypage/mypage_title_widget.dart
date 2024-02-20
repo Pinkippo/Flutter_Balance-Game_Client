@@ -21,7 +21,7 @@ class MyPageTitleWidget extends StatelessWidget {
           ),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withOpacity(0.2),
+              color: Colors.black.withOpacity(0.4),
               offset: const Offset(0, 10),
               blurRadius: 5,
               spreadRadius: 0,

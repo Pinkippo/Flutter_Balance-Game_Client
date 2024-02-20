@@ -45,14 +45,23 @@ class ListByHeartOn extends GetView<ListController> {
                     onTap: () async {
                       await Get.toNamed('/detail?boardKey=${controller.boardListByHeartOn[index].boardKey}');
                     },
-                    child: Card(
-                      elevation: 10,
+                    child: Container(
                       margin: const EdgeInsets.fromLTRB(10, 10, 10, 10),
-                      color: AppColors.cardColor,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                      shadowColor: Colors.grey.withOpacity(0.5),
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(15),
+                          gradient: const LinearGradient(
+                            begin: Alignment.centerLeft,
+                            end: Alignment.centerRight,
+                            colors: [AppColors.mainPurpleColor, Colors.purpleAccent],
+                          ),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black.withOpacity(0.4),
+                              offset: const Offset(0, 10),
+                              blurRadius: 5,
+                              spreadRadius: 0,
+                            )
+                          ]),
                       child: Column(
                         children: [
                           const SizedBox(
@@ -69,11 +78,11 @@ class ListByHeartOn extends GetView<ListController> {
                                   width: 10,
                                 ),
                                 const CircleAvatar(
-                                  backgroundColor: AppColors.shadowColor,
+                                  backgroundColor: Colors.white,
                                   radius: 20,
                                   child: Icon(
                                     Icons.person,
-                                    color: AppColors.mainRedColor,
+                                    color: AppColors.mainPurpleColor,
                                     size: 30,
                                   ),
                                 ),
@@ -87,35 +96,18 @@ class ListByHeartOn extends GetView<ListController> {
                                     Text(
                                       controller.boardListByHeartOn[index].userName,
                                       style: const TextStyle(
-                                          fontSize: 16,
+                                          fontSize: 14,
                                           fontWeight: FontWeight.bold,
-                                          color: AppColors.blackColor),
+                                          color: Colors.white),
                                     ),
                                     Text(
                                       convertToFormattedString(controller
                                           .boardListByHeartOn[index].boardDate),
                                       style: const TextStyle(
                                           fontSize: 10,
-                                          color: AppColors.blackColor),
+                                          color: Colors.white),
                                     ),
                                   ],
-                                ),
-
-                                const Spacer(),
-
-                                Obx(
-                                      () => Text(
-                                    "❤️${controller.boardListByDate[index].heartCount}",
-                                    style: const TextStyle(
-                                      fontSize: 15,
-                                      color: AppColors.blackColor,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                ),
-
-                                const SizedBox(
-                                  width: 18,
                                 ),
                               ],
                             ),
@@ -127,72 +119,41 @@ class ListByHeartOn extends GetView<ListController> {
 
                           /// 중단부
                           SizedBox(
-                            width: Get.width * 0.86,
                             height: 50,
                             child: Center(
                               child: Text(
-                                controller.boardListByHeartOn[index].boardTitle,
+                                controller
+                                    .boardListByDate[index].boardTitle,
                                 style: const TextStyle(
-                                    fontSize: 22,
-                                    fontWeight: FontWeight.bold,
-                                    color: AppColors.blackColor),
+                                  fontSize: 22,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.white,
+                                ),
                               ),
                             ),
                           ),
 
                           const SizedBox(
-                            height: 5,
+                            height: 10,
                           ),
 
-                          /// 하단부
-                          SizedBox(
-                              height: 45,
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Expanded(
-                                    flex: 3,
-                                    child: Padding(
-                                      padding: const EdgeInsets.fromLTRB(8, 0, 8, 0),
-                                      child: Card(
-                                          color: AppColors.shadowColor,
-                                          shape: RoundedRectangleBorder(
-                                            borderRadius: BorderRadius.circular(15),
-                                          ),
-                                          child: Container()
-                                      ),
-                                    ),
-                                  ),
-                                  const Expanded(
-                                    flex: 1,
-                                    child: Center(
-                                      child: Text(
-                                        "VS",
-                                        style: TextStyle(
-                                          fontSize: 18,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                  Expanded(
-                                    flex: 3,
-                                    child: Padding(
-                                      padding: const EdgeInsets.fromLTRB(8, 0, 8, 0),
-                                      child: Card(
-                                          color: AppColors.shadowColor,
-                                          shape: RoundedRectangleBorder(
-                                            borderRadius: BorderRadius.circular(15),
-                                          ),
-                                          child: Container()
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              )),
+                          Container(
+                            color: Colors.white.withOpacity(0.65),
+                            height: 75,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              children: [
+                                /// TODO : 게시물 정보 데이터 연결하기
+                                _buildCountColumn('조회수 👀', 0),
+                                _buildCountColumn('댓글 💬', 0),
+                                _buildCountColumn('좋아요 ❤️', controller
+                                    .boardListByDate[index].heartCount),
+                              ],
+                            ),
+                          ),
 
                           const SizedBox(
-                            height: 10,
+                            height: 20,
                           ),
                         ],
                       ),
@@ -204,4 +165,33 @@ class ListByHeartOn extends GetView<ListController> {
           }
         }));
   }
+
+  /// 게시물 정보 보여주는 위젯
+  Widget _buildCountColumn(String label, int count) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Text(
+          label,
+          style: const TextStyle(
+            fontSize: 16,
+            color: AppColors.blackColor,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        const SizedBox(
+          height: 2,
+        ),
+        Text(
+          '$count',
+          style: const TextStyle(
+            fontSize: 16,
+            color: AppColors.blackColor,
+            fontWeight: FontWeight.w500,
+          ),
+        )
+      ],
+    );
+  }
+
 }
